@@ -1,0 +1,186 @@
+﻿using DataStructure;
+using System;
+using DataStructure.Stack.ImplementByArray;
+using DataStructure.Stack.ImplementByLinkList;
+
+namespace DataStructure.Stack
+{
+    class Program
+    {
+        /*        static void Main(string[] args)
+                {
+                    var array = new ArrayStack<int>(5);
+                    array.Push(12);
+                    array.Push(1);
+                    array.Push(99);
+                    array.Push(48);
+                    array.Push(76);
+
+                    foreach (var item in array)
+                    {
+                        Console.WriteLine(item);
+                    }
+                }*/
+
+        /*        static void Main(string[] args)
+                {
+                    Console.WriteLine("请输入第一个加数");
+                    string oneNum = Console.ReadLine();
+                    Console.WriteLine("请输入第二个加数");
+                    string twoNum = Console.ReadLine();
+
+                    string result = TwoBigNumAdd.TwoBigNumAdd2(oneNum, twoNum);
+                    Console.WriteLine("计算结果：");
+                    Console.WriteLine(result);
+                }*/
+        static void Main(string[] args)
+        {
+            // 01.基于链表的栈
+            //StackWithLinkListTest();
+            // 02.基于数组的栈
+            StackWithArrayTest();
+            // 03.进制转换问题
+            // NumberConvertTest();
+
+            Console.ReadKey();
+        }
+
+        #region Method01.基于链表的栈的测试
+        /// <summary>
+        /// 基于链表的栈的测试
+        /// </summary>
+        static void StackWithLinkListTest()
+        {
+            MyLinkStack<int> stack = new MyLinkStack<int>();
+            Console.WriteLine("IsEmpty:{0}", stack.IsEmpty());
+
+            Random rand = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                stack.Push(rand.Next(1, 10));
+            }
+            Console.WriteLine("IsEmpty:{0}", stack.IsEmpty());
+            Console.WriteLine("Size:{0}", stack.Size);
+            Console.WriteLine("-------------------------------");
+
+            for (int i = 0; i < 10; i++)
+            {
+                int node = stack.Pop();
+                Console.Write(node + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine("IsEmpty:{0}", stack.IsEmpty());
+            Console.WriteLine("Size:{0}", stack.Size);
+            Console.WriteLine("-------------------------------");
+
+            for (int i = 0; i < 15; i++)
+            {
+                stack.Push(rand.Next(1, 15));
+            }
+            for (int i = 0; i < 15; i++)
+            {
+                int node = stack.Pop();
+                Console.Write(node + " ");
+            }
+            Console.WriteLine();
+        }
+        #endregion
+
+        #region Method02.基于数组的栈的测试
+        /// <summary>
+        /// 基于数组的栈的测试
+        /// </summary>
+        static void StackWithArrayTest()
+        {
+            MyArrayStack<int> stack = new MyArrayStack<int>(10);
+            Console.WriteLine("IsEmpty:{0}", stack.IsEmpty());
+
+            Random rand = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                stack.Push(rand.Next(1, 10));
+            }
+            Console.WriteLine("IsEmpty:{0}", stack.IsEmpty());
+            Console.WriteLine("Size:{0}", stack.Size);
+            Console.WriteLine("-------------------------------");
+
+            for (int i = 0; i < 10; i++)
+            {
+                int node = stack.Pop();
+                Console.Write(node + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine("IsEmpty:{0}", stack.IsEmpty());
+            Console.WriteLine("Size:{0}", stack.Size);
+            Console.WriteLine("-------------------------------");
+
+            for (int i = 0; i < 15; i++)
+            {
+                stack.Push(rand.Next(1, 15));
+            }
+            for (int i = 0; i < 15; i++)
+            {
+                int node = stack.Pop();
+                Console.Write(node + " ");
+            }
+            Console.WriteLine();
+        }
+        #endregion
+
+        #region Method03:进制转换问题
+        static void NumberConvertTest()
+        {
+            Console.WriteLine("请先输入要转换的十进制数：");
+            int num = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("请再输入要转换的进制：(2进制、8进制、16进制)");
+            int dec = Convert.ToInt32(Console.ReadLine());
+
+            string result = DecConvert(num, dec);
+            if (string.IsNullOrEmpty(result))
+            {
+                Console.WriteLine("#_#:转换出错，请重新再试！");
+            }
+            else
+            {
+                Console.WriteLine("^_^:({0})=({1})", num.ToString(), result);
+            }
+        }
+
+        private static string DecConvert(int num, int dec)
+        {
+            if (dec < 2 || dec > 16)
+            {
+                throw new ArgumentOutOfRangeException("dec", "只支持将十进制数转换为二进制到十六进制数");
+            }
+
+            MyLinkStack<char> stack = new MyLinkStack<char>();
+            int residue;
+            // 余数入栈
+            while (num != 0)
+            {
+                residue = num % dec;
+                if (residue >= 10)
+                {
+                    // 如果是转换为16进制且余数大于10则需要转换为ABCDEF
+                    residue = residue + 55;
+                }
+                else
+                {
+                    // 转换为ASCII码中的数字型字符1~9
+                    residue = residue + 48;
+                }
+                stack.Push((char)residue);
+                num = num / dec;
+            }
+            // 反序出栈
+            string result = string.Empty;
+            while (stack.Size > 0)
+            {
+                result += stack.Pop();
+            }
+
+            return result;
+        }
+        #endregion
+    }
+}
