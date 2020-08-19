@@ -4,10 +4,10 @@ using System.Collections;
 namespace DataStructure
 {
 
-    /*
-    stack是一种先进后出的数据结构
-    使用泛型数组实现栈的peek、pop、push和栈的长度
-     */
+    /// <summary>
+    /// stack是一种先进后出的数据结构，使用泛型数组实现栈的peek、pop、push和栈的长度
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class ArrayStack<T>: IEnumerable
     {
         private T[] _memory;
