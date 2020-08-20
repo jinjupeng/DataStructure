@@ -33,7 +33,7 @@ namespace DataStructure.LinkedList
         }
 
         /// <summary>
-        /// 索引器
+        /// this关键字-索引器
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -164,9 +164,9 @@ namespace DataStructure.LinkedList
     public class Node<T>
     {
         // 数据域
-        public T Item { get; set; }
+        public T Item; 
         // 指针域
-        public Node<T> Next { get; set; }
+        public Node<T> Next;
 
         /// <summary>
         /// 自定义无参构造函数
@@ -174,14 +174,16 @@ namespace DataStructure.LinkedList
         public Node()
         {
         }
-        
+
         /// <summary>
         /// 自定义有一个参数的构造函数（构造函数重载）
         /// </summary>
         /// <param name="item"></param>
-        public Node(T item)
+        /// <param name="next"></param>
+        public Node(T item, Node<T> next = null)
         {
             this.Item = item;
+            this.Next = next;
         }
     }
 }

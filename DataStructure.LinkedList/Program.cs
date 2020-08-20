@@ -65,6 +65,7 @@ namespace DataStructure.LinkedList
                 Console.WriteLine(linkedList[i]);
             }
             Console.WriteLine("----------------------------");
+
         }
     }
 }
