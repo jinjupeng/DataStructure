@@ -22,7 +22,7 @@ namespace DataStructure.Queue.ImplementByDoubleStack
         public void Push(T t)
         {
             _stack1.Push(t);
-            this.Size = 0;
+            this.Size = _stack1.Count;
         }
 
         /** Removes the element from in front of queue and returns that element. */
