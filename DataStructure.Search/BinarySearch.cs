@@ -3,7 +3,7 @@
     public class BinarySearch
     {
         /// <summary>
-        /// 二分查找
+        /// 二分查找（折半查找）
         /// </summary>
         /// <param name="nums"></param>
         /// <param name="target"></param>
