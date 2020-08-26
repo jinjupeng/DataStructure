@@ -7,7 +7,8 @@ namespace DataStructure.LinkedList
         static void Main(string[] args)
         {
             // MySingleLinkListTest();
-            MyDoubleLinkedListTest();
+            // MyDoubleLinkedListTest();
+            MyCircularLinkedListTest();
 
         }
 
@@ -156,6 +157,44 @@ namespace DataStructure.LinkedList
             }
             Console.WriteLine();
             Console.WriteLine("----------------------------");
+        }
+
+        #endregion
+
+        #region 单循环链表简单测试
+
+        static void MyCircularLinkedListTest()
+        {
+            MyCircularLinkedList<int> linkedList = new MyCircularLinkedList<int>();
+            // 顺序插入5个节点
+            linkedList.Add(1);
+            linkedList.Add(2);
+            linkedList.Add(3);
+            linkedList.Add(4);
+            linkedList.Add(5);
+
+            Console.WriteLine("All nodes in the circular linked list:");
+            Console.WriteLine(linkedList.GetAllNodes());
+            Console.WriteLine("--------------------------------------");
+            // 当前节点：第一个节点
+            Console.WriteLine("Current node in the circular linked list:");
+            Console.WriteLine(linkedList.CurrentItem);
+            Console.WriteLine("--------------------------------------");
+            // 移除当前节点(第一个节点)
+            linkedList.Remove();
+            Console.WriteLine("After remove the current node:");
+            Console.WriteLine(linkedList.GetAllNodes());
+            Console.WriteLine("Current node in the circular linked list:");
+            Console.WriteLine(linkedList.CurrentItem);
+            // 移除当前节点(第二个节点)
+            linkedList.Remove();
+            Console.WriteLine("After remove the current node:");
+            Console.WriteLine(linkedList.GetAllNodes());
+            Console.WriteLine("Current node in the circular linked list:");
+            Console.WriteLine(linkedList.CurrentItem);
+            Console.WriteLine("--------------------------------------");
+
+            Console.WriteLine();
         }
 
         #endregion
