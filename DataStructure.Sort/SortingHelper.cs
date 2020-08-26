@@ -33,8 +33,7 @@ namespace DataStructure.Sort
         /// 加入哨兵版直接插入排序
         /// </summary>
         /// <param name="arr">待排序数组</param>
-        public static void StraightInsertSortWithSentry
-(T[] arr)
+        public static void StraightInsertSortWithSentry(T[] arr)
         {
             int i, j;
 
