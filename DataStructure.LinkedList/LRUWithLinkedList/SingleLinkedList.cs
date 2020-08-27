@@ -33,6 +33,9 @@ namespace DataStructure.LinkedList.LRUWithLinkedList
         public ListNode<T> First => Head.Next;
         public ListNode<T> Head { get; }
 
+        /// <summary>
+        /// 链表长度
+        /// </summary>
         public int Length { get; private set; }
 
         /// <summary>
