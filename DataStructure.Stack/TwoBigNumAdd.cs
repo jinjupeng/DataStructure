@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace DataStructure
+namespace DataStructure.Stack
 {
     public class TwoBigNumAdd
     {

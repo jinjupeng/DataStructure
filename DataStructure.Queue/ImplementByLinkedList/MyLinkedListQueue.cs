@@ -55,7 +55,7 @@
         /// <returns></returns>
         public bool IsEmpty()
         {
-            return _head == _tail;
+            return _head == null;
         }
     }
 
