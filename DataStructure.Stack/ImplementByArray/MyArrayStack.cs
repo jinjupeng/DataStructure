@@ -1,7 +1,7 @@
 ﻿namespace DataStructure.Stack.ImplementByArray
 {
     /// <summary>
-    /// 基于数组的栈实现
+    /// 基于数组实现的顺序栈
     /// </summary>
     /// <typeparam name="T">类型</typeparam>
     public class MyArrayStack<T>
