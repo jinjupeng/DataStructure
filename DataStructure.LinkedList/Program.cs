@@ -8,8 +8,7 @@ namespace DataStructure.LinkedList
         {
             // MySingleLinkListTest();
             // MyDoubleLinkedListTest();
-            // MyCircularLinkedListTest();
-            MyDoubleLinkedList2Test();
+            MyCircularLinkedListTest();
 
         }
 
@@ -162,64 +161,6 @@ namespace DataStructure.LinkedList
 
         #endregion
 
-        #region 双链表2测试
-
-        static void MyDoubleLinkedList2Test()
-        {
-            MyDoubleLinkedList2<int> linkedList = new MyDoubleLinkedList2<int>();
-            // Test1:顺序插入4个节点
-            linkedList.AddLast(0);
-            linkedList.AddLast(1);
-            linkedList.AddLast(2);
-            linkedList.AddLast(3);
-
-            Console.WriteLine("在尾节点之后插入3个节点:");
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write(linkedList[i] + " ");
-            }
-            Console.WriteLine();
-            Console.WriteLine("----------------------------");
-
-            // Test2.1:在头节点之前插入2个节点
-            linkedList.AddFirst(10);
-            linkedList.AddFirst(20);
-            Console.WriteLine("在头节点之前插入2个节点:");
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write(linkedList[i] + " ");
-            }
-
-            Console.WriteLine("----------------------------");
-            // Test3.2:移除索引为0(即第一个节点)的位置的节点的值
-            linkedList.Delete(0);
-            Console.WriteLine("移除索引为0(即第一个节点)的位置的节点的值:");
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write(linkedList[i] + " ");
-            }
-            Console.WriteLine();
-            // Test3.3:移除索引为2(即第3个节点)的位置的节点
-            linkedList.Delete(2);
-            Console.WriteLine("移除索引为2(即第3个节点)的位置的节点:");
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write(linkedList[i] + " ");
-            }
-            Console.WriteLine();
-            Console.WriteLine("----------------------------");
-            // Test4:修改索引为2(即第3个节点)的位置的节点的值
-            linkedList[2] = 9;
-            Console.WriteLine("修改索引为2(即第3个节点)的位置的节点的值:");
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write(linkedList[i] + " ");
-            }
-            Console.WriteLine();
-            Console.WriteLine("----------------------------");
-        }
-
-        #endregion
 
         #region 单循环链表简单测试
 
