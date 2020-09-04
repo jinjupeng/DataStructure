@@ -2,7 +2,7 @@
 
 > 记录学习[《数据结构与算法之美》](https://time.geekbang.org/column/intro/126)专栏的实现代码（C#）& 笔记。
 
-[![](https://img.shields.io/github/issues/jinjupeng/DataStructure.svg)](https://github.com/jinjupeng/DataStructure/issues) [![](http://img.shields.io/github/forks/jinjupeng/DataStructure.svg)](https://github.com/jinjupeng/DataStructure/network)[![star this repo](https://badgen.net/github/stars/jinjupeng/DataStructure)](https://github.com/jinjupeng/DataStructure)[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/anjoy8/Blog.Core/blob/master/LICENSE) [![Language](https://img.shields.io/badge/language-csharp-d.svg)](#) 
+[![](https://img.shields.io/github/issues/jinjupeng/DataStructure.svg)](https://github.com/jinjupeng/DataStructure/issues) [![](http://img.shields.io/github/forks/jinjupeng/DataStructure.svg)](https://github.com/jinjupeng/DataStructure/network) [![star this repo](https://badgen.net/github/stars/jinjupeng/DataStructure)](https://github.com/jinjupeng/DataStructure) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/anjoy8/Blog.Core/blob/master/LICENSE) [![Language](https://img.shields.io/badge/language-csharp-d.svg)](#) 
 ---
 
 
