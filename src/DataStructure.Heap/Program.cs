@@ -8,7 +8,8 @@ namespace DataStructure.Heap
         {
 
             // BuildHeapTest();
-            HeapSortTest();
+            // HeapSortTest();
+            PriorityQueueTest();
         }
 
         #region 建堆测试
@@ -55,6 +56,23 @@ namespace DataStructure.Heap
                     Console.Write(array[i] + " ");
                 }
             }
+        }
+
+        #endregion
+
+        #region 优先队列测试
+
+        public static void PriorityQueueTest()
+        {
+            var queue = new MyPriorityQueue<int>(5);
+            queue.Push(12);
+            queue.Push(23);
+            queue.Push(11);
+            queue.Push(21);
+            queue.Pop();
+            queue.Pop();
+            queue.Pop();
+            var count = queue.Count;
         }
 
         #endregion

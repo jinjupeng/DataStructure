@@ -20,7 +20,7 @@
         }
 
         /// <summary>
-        /// 建堆
+        /// 自底向上建堆：将一个无序的序列初始化成堆，从最后一个非叶子节点开始，自右向左，自下而上
         /// </summary>
         /// <param name="array"></param>
         /// <param name="count"></param>

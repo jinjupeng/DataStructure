@@ -24,7 +24,7 @@ namespace DataStructure.Heap
 
         /// <summary>
         /// 堆中插入一个元素
-        /// 第一种堆化方式：自下往上堆化
+        /// 第一种堆化方式：自底向上堆化
         /// </summary>
         /// <param name="data"></param>
         public void Insert(int data)
@@ -35,11 +35,13 @@ namespace DataStructure.Heap
             }
 
             ++_count;
-            _array[_count] = data;
+            _array[_count] = data; // 将值data置于数组末尾
 
             var i = _count;
+            // 如果i节点有父节点，且比父节点的值大
             while (i / 2 > 0 && _array[i] > _array[i / 2])
             {
+                // 交换i与父节点的值
                 Swap(_array, i, i / 2); // swap()函数作用：交换下标为i和i/2的两个元素
                 i = i / 2;
             }
@@ -79,15 +81,20 @@ namespace DataStructure.Heap
              */
             while (true)
             {
+                // 假设index位置是最大值位置
                 var maxPos = index;
 
+                // 如果index位置节点有左节点，且比左节点值小
                 if (index * 2 <= count && array[index] < array[index * 2])
                 {
+                    // 左节点成最大值
                     maxPos = index * 2;
                 }
 
+                // 如果index位置节点有右节点，且最大值节点小于右节点
                 if (index * 2 + 1 <= count && array[maxPos] < array[index * 2 + 1])
                 {
+                    // 右节点成最大值
                     maxPos = index * 2 + 1;
                 }
 
