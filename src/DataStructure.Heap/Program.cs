@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DataStructure.Heap
 {
@@ -9,7 +10,8 @@ namespace DataStructure.Heap
 
             // BuildHeapTest();
             // HeapSortTest();
-            PriorityQueueTest();
+            // PriorityQueueTest();
+            MSPriorityQueueTest();
         }
 
         #region 建堆测试
@@ -64,6 +66,7 @@ namespace DataStructure.Heap
 
         public static void PriorityQueueTest()
         {
+            
             var queue = new MyPriorityQueue<int>(5);
             queue.Push(12);
             queue.Push(23);
@@ -72,9 +75,54 @@ namespace DataStructure.Heap
             queue.Pop();
             queue.Pop();
             queue.Pop();
+            queue.Pop();
             var count = queue.Count;
         }
 
         #endregion
+
+        #region 微软源代码优先队列测试
+
+        public static void MSPriorityQueueTest()
+        {
+
+            var queue = new MSPriorityQueue<int>(5, new HeapCompare());
+            queue.Push(12);
+            queue.Push(23);
+            queue.Push(11);
+            queue.Push(21);
+            queue.Pop();
+            queue.Pop();
+            queue.Pop();
+            queue.Pop();
+            var count = queue.Count;
+        }
+
+        #endregion
+
     }
+
+    public class HeapCompare : IComparer<int>
+    {
+        public int Compare(int x, int y)
+        {
+            if (x > y)
+            {
+                return -1;
+            }
+
+            if (x == y)
+            {
+                return 0;
+            }
+
+            if (x < y)
+            {
+                return 1;
+            }
+
+            return default;
+        }
+    }
+
 }
