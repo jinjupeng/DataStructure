@@ -1,4 +1,5 @@
 ﻿using System;
+using DataStructure.LinkedList.LRU;
 
 namespace DataStructure.LinkedList
 {
@@ -8,8 +9,8 @@ namespace DataStructure.LinkedList
         {
             // MySingleLinkListTest();
             // MyDoubleLinkedListTest();
-            MyCircularLinkedListTest();
-
+            // MyCircularLinkedListTest();
+            LruCacheTest();
         }
 
         #region 单链表测试
@@ -196,6 +197,25 @@ namespace DataStructure.LinkedList
             Console.WriteLine("--------------------------------------");
 
             Console.WriteLine();
+        }
+
+        #endregion
+
+        #region LRU（最近最少未使用算法）自定义实现测试
+
+        public static void LruCacheTest()
+        {
+            var cache = new LRUBaseSingleLinkedList(2);
+            cache.Put(1, 1);
+            cache.Put(2, 2);
+            var a = cache.Get(1);       // 返回  1
+            cache.Put(3, 3);    // 该操作会使得关键字 2 作废
+            var b = cache.Get(2);       // 返回  -1 (未找到)
+            cache.Put(4, 4);    // 该操作会使得关键字 1 作废
+            var c = cache.Get(1);       // 返回  -1 (未找到)
+            var d = cache.Get(3);       // 返回  3
+            var e = cache.Get(4);       // 返回  4
+
         }
 
         #endregion
