@@ -1,4 +1,5 @@
 ﻿using DataStructure.String.BF;
+using DataStructure.String.RK;
 
 namespace DataStructure.String
 {
@@ -6,7 +7,8 @@ namespace DataStructure.String
     {
         static void Main(string[] args)
         {
-            BFTest();
+            // BFTest();
+            RKTest();
         }
 
 
@@ -18,6 +20,18 @@ namespace DataStructure.String
             var pattern = "bgf";
             var bf = new BruteForce();
             var data = bf.BFSearch(mainString, pattern); // 20
+        }
+
+        #endregion
+
+        #region RKTest
+
+        public static void RKTest()
+        {
+            var mainString = "qweasdfggcxfbghgxxcvbgfjn";
+            var pattern = "bgf";
+            var bf = new RabinKarp();
+            var data = bf.RKSearch(mainString, pattern); // 20
         }
 
         #endregion

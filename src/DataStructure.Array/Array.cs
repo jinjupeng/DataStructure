@@ -2,12 +2,23 @@
 
 namespace DataStructure.Array
 {
-    public sealed class Array<T> where T : IComparable<T>
+    public class Array<T> where T : IComparable<T>
     {
         private T[] _data;
+        /// <summary>
+        /// 定义数组容量
+        /// </summary>
         private readonly int _capacity;
+
+        /// <summary>
+        /// 定义数组中保存的实际个数
+        /// </summary>
         private int _length;
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="capacity"></param>
         public Array(int capacity)
         {
             _data = new T[capacity];
@@ -15,17 +26,23 @@ namespace DataStructure.Array
             _length = 0;
         }
 
-        // length of list
-        public int Length => _length;
+        public Array() : this(10)
+        {
+        }
 
-        // insert a new element at specified index (index start from 0)
+        // 获取数组中元素个数
+        public int Count => _length;
+
+        // 根据索引位置插入元素
         public void Insert(int index, T newElem)
         {
+            // 数组空间已满
             if (_length == _capacity)
             {
                 throw new OutOfMemoryException("List has no more space");
             }
 
+            // 插入位置不合法
             if (index < 0 || index > _length)
             {
                 throw new IndexOutOfRangeException("Index was outside the bounds of the list");
@@ -42,7 +59,7 @@ namespace DataStructure.Array
             _length++;
         }
 
-        // get an element base on index
+        // 根据索引，找到数据中的元素并返回
         public T Find(int index)
         {
             if (index < 0 || index > _length - 1)
@@ -70,7 +87,7 @@ namespace DataStructure.Array
             return -1;
         }
 
-        // delete an node which is on the specified index
+        // 根据索引，删除数组中元素
         public bool Delete(int index)
         {
             if (index < 0 || index > _length - 1)
@@ -92,25 +109,34 @@ namespace DataStructure.Array
             return true;
         }
 
-        // delete an node 
+        // 从数组中删除指定元素
         public bool Delete(T val)
         {
             int index;
-            for (index = 0; index < Length; index++)
+            for (index = 0; index < Count; index++)
             {
                 if (_data[index].CompareTo(val) == 0) break;
             }
 
-            if (index >= Length) return false;
+            if (index >= Count) return false;
 
             return Delete(index);
         }
 
-        // clear list
+        // 清空数组
         public void Clear()
         {
             _data = new T[_capacity];
             _length = 0;
+        }
+
+        /// <summary>
+        /// 判断数组是否为空
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmpty()
+        {
+            return _length == 0;
         }
     }
 }
