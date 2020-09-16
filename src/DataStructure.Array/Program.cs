@@ -1,5 +1,4 @@
-﻿using System;
-using DataStructure.Array.BinarySearchBySortedArray;
+﻿using DataStructure.Array.BinarySearchBySortedArray;
 using DataStructure.Array.LRU;
 
 namespace DataStructure.Array
@@ -10,7 +9,6 @@ namespace DataStructure.Array
         {
             // BinarySearchTest();
             LruCacheTest();
-            Console.ReadKey();
         }
 
         #region 二分查找测试
@@ -27,24 +25,16 @@ namespace DataStructure.Array
 
         public static void LruCacheTest()
         {
-            var cache = new LRUWithArray(2);
-            cache.Put(1);
-            cache.Put(2);
-            cache.PrintAll();
+            var cache = new LruBaseArray(2);
+            cache.Put(1, 1);
+            cache.Put(2, 2);
             var a = cache.Get(1);       // 返回  1
-            cache.PrintAll();
-            cache.Put(3);    // 该操作会使得关键字 2 作废
-            cache.PrintAll();
-            var b = cache.Get(2);       // 返回  2
-            cache.PrintAll();
-            cache.Put(4);    // 该操作会使得关键字 1 作废
-            cache.PrintAll();
-            var c = cache.Get(1);       // 返回  1
-            cache.PrintAll();
+            cache.Put(3, 3);    // 该操作会使得关键字 2 作废
+            var b = cache.Get(2);       // 返回  -1 (未找到)
+            cache.Put(4, 4);    // 该操作会使得关键字 1 作废
+            var c = cache.Get(1);       // 返回  -1 (未找到)
             var d = cache.Get(3);       // 返回  3
-            cache.PrintAll();
             var e = cache.Get(4);       // 返回  4
-            cache.PrintAll();
         }
 
         #endregion

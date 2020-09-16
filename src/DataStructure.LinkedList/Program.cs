@@ -205,7 +205,7 @@ namespace DataStructure.LinkedList
 
         public static void LruCacheTest()
         {
-            var cache = new LRUBaseSingleLinkedList(2);
+            var cache = new LruBaseSingleLinkedList(2);
             cache.Put(1, 1);
             cache.Put(2, 2);
             var a = cache.Get(1);       // 返回  1

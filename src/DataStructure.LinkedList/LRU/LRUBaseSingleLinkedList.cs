@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace DataStructure.LinkedList.LRU
 {
-    public class LRUBaseSingleLinkedList
+    public class LruBaseSingleLinkedList
     {
         /*
          * 实现LRU缓存淘汰算法思路：
@@ -52,7 +52,7 @@ namespace DataStructure.LinkedList.LRU
         /// 思路：双向链表 + 字典
         /// </summary>
         /// <param name="capacity"></param>
-        public LRUBaseSingleLinkedList(int capacity)
+        public LruBaseSingleLinkedList(int capacity)
         {
             _size = 0;
             _capacity = capacity;

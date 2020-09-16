@@ -5,15 +5,11 @@ namespace DataStructure.Array
     public class Array<T> where T : IComparable<T>
     {
         private T[] _data;
+
         /// <summary>
         /// 定义数组容量
         /// </summary>
         private readonly int _capacity;
-
-        /// <summary>
-        /// 定义数组中保存的实际个数
-        /// </summary>
-        private int _length;
 
         /// <summary>
         /// 构造函数
@@ -23,46 +19,56 @@ namespace DataStructure.Array
         {
             _data = new T[capacity];
             _capacity = capacity;
-            _length = 0;
+            Count = 0;
         }
 
         public Array() : this(10)
         {
         }
 
-        // 获取数组中元素个数
-        public int Count => _length;
+        /// <summary>
+        /// 定义数组中保存的实际个数
+        /// </summary>
+        public int Count { get; private set; }
 
-        // 根据索引位置插入元素
+        /// <summary>
+        /// 根据索引位置插入元素
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="newElem"></param>
         public void Insert(int index, T newElem)
         {
             // 数组空间已满
-            if (_length == _capacity)
+            if (Count == _capacity)
             {
                 throw new OutOfMemoryException("List has no more space");
             }
 
             // 插入位置不合法
-            if (index < 0 || index > _length)
+            if (index < 0 || index > Count)
             {
                 throw new IndexOutOfRangeException("Index was outside the bounds of the list");
             }
 
             // to loop array from end until finding the target index
-            for (int k = _length; k > index; k--)
+            for (int k = Count; k > index; k--)
             {
                 _data[k] = _data[k - 1];
             }
 
             _data[index] = newElem;
 
-            _length++;
+            Count++;
         }
 
-        // 根据索引，找到数据中的元素并返回
+        /// <summary>
+        /// 根据索引，找到数据中的元素并返回
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public T Find(int index)
         {
-            if (index < 0 || index > _length - 1)
+            if (index < 0 || index > Count - 1)
             {
                 throw new IndexOutOfRangeException("Index was outside the bounds of the list");
             }
@@ -70,15 +76,19 @@ namespace DataStructure.Array
             return _data[index];
         }
 
-        // search the node which matches specified value and return its index (index start from 0)
+        /// <summary>
+        /// search the node which matches specified value and return its index (index start from 0)
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public int IndexOf(T val)
         {
-            if (_length == 0) return -1;
+            if (Count == 0) return -1;
             if (_data[0].Equals(val)) return 0;
-            if (_data[_length - 1].CompareTo(val) == 0) return _length - 1;
+            if (_data[Count - 1].CompareTo(val) == 0) return Count - 1;
 
             int start = 1;
-            while (start < _length - 1)
+            while (start < Count - 1)
             {
                 if (_data[start].CompareTo(val) == 0) return start;
                 start++;
@@ -87,29 +97,36 @@ namespace DataStructure.Array
             return -1;
         }
 
-        // 根据索引，删除数组中元素
+        /// <summary>
+        /// 根据索引，删除数组中元素
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public bool Delete(int index)
         {
-            if (index < 0 || index > _length - 1)
+            if (index < 0 || index > Count - 1)
             {
                 throw new IndexOutOfRangeException("Index must be in the bound of list");
             }
 
-            T deletedElem = _data[index];
-            if (index < _length - 1)
+            if (index < Count - 1)
             {
-                for (int k = index; k < _length; k++)
+                for (int k = index; k < Count; k++)
                 {
                     _data[k] = _data[k + 1];
                 }
             }
 
-            _length--;
+            Count--;
 
             return true;
         }
 
-        // 从数组中删除指定元素
+        /// <summary>
+        /// 从数组中删除指定元素
+        /// </summary>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public bool Delete(T val)
         {
             int index;
@@ -123,11 +140,13 @@ namespace DataStructure.Array
             return Delete(index);
         }
 
-        // 清空数组
+        /// <summary>
+        /// 清空数组
+        /// </summary>
         public void Clear()
         {
             _data = new T[_capacity];
-            _length = 0;
+            Count = 0;
         }
 
         /// <summary>
@@ -136,7 +155,7 @@ namespace DataStructure.Array
         /// <returns></returns>
         public bool IsEmpty()
         {
-            return _length == 0;
+            return Count == 0;
         }
     }
 }
