@@ -28,10 +28,8 @@ namespace DataStructure.String
 
         public static void RKTest()
         {
-            var mainString = "qweasdfggcxfbghgxxcvbgfjn";
-            var pattern = "bgf";
-            var bf = new RabinKarp();
-            var data = bf.RKSearch(mainString, pattern); // 20
+            var bf = new RabinKarp("bgf");
+            var data = bf.Search("qweasdfggcxfbghgxxcvbgfjn"); // 20
         }
 
         #endregion
