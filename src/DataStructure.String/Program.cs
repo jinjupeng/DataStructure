@@ -10,7 +10,8 @@ namespace DataStructure.String
         {
             // BFTest();
             // RKTest();
-            KMPTest();
+            // KMPTest();
+            TrieTest();
         }
 
 
@@ -42,6 +43,22 @@ namespace DataStructure.String
         {
             var bf = new KnuthMorrisPratt("bgf");
             var data = bf.Search("qweasdfggcxfbghgxxcvbgfjn"); // 20
+        }
+
+        #endregion
+
+        #region TrieTest
+
+        public static void TrieTest()
+        {
+            Trie trie = new Trie();
+            trie.Insert("apple");
+            var a = trie.Search("apple");   // 返回 true
+            var b = trie.Search("app");     // 返回 false
+            var c = trie.StartsWith("app"); // 返回 true
+            trie.Insert("app");
+            var d = trie.Search("app");     // 返回 true
+
         }
 
         #endregion

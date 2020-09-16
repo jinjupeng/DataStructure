@@ -10,6 +10,7 @@
         /// <returns></returns>
         public int BMSearch(string main, string pattern)
         {
+            // TODO：未实现
             if (main.Length == 0 || pattern.Length == 0 || main.Length < pattern.Length)
             {
                 return -1;
