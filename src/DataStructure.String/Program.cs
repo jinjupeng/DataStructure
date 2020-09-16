@@ -1,4 +1,5 @@
 ﻿using DataStructure.String.BF;
+using DataStructure.String.KMP;
 using DataStructure.String.RK;
 
 namespace DataStructure.String
@@ -8,7 +9,8 @@ namespace DataStructure.String
         static void Main(string[] args)
         {
             // BFTest();
-            RKTest();
+            // RKTest();
+            KMPTest();
         }
 
 
@@ -29,6 +31,16 @@ namespace DataStructure.String
         public static void RKTest()
         {
             var bf = new RabinKarp("bgf");
+            var data = bf.Search("qweasdfggcxfbghgxxcvbgfjn"); // 20
+        }
+
+        #endregion
+
+        #region KMPTest
+
+        public static void KMPTest()
+        {
+            var bf = new KnuthMorrisPratt("bgf");
             var data = bf.Search("qweasdfggcxfbghgxxcvbgfjn"); // 20
         }
 

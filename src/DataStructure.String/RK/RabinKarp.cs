@@ -10,7 +10,7 @@
         private readonly int _patLength;   // 模拟字符串长度
         private readonly long _q;          // 随机的大素数,在不溢出的情况下选择一个尽可能大的素数
         private readonly int _r;           // 进制数（字母表大小）,如果字符串中所有的字符都是小写英文字母,那么就是26进制,如果都是数字,那么就是10进制,如果没有说明,那么就以ASCII表256进制来计算
-        private readonly long _rm;         // R^(M-1) % Q
+        private readonly long _rm;         // _r^(_patLength - 1) % _q
 
 
         /// <summary>
@@ -86,10 +86,10 @@
             long txtHash = Hash(txt, _patLength);
 
             // 在开始位置匹配成功
-            if ((_patHash == txtHash) && Check(txt, 0))
+            if (_patHash == txtHash && Check(txt, 0))
                 return 0;
 
-            // check for hash match; if hash match, check for exact match
+            // 检查hash值是否匹配，如果hash匹配，则再检测字符串是否匹配
             for (int i = _patLength; i < n; i++)
             {
                 // Remove leading digit, add trailing digit, check for match. 
