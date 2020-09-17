@@ -16,13 +16,14 @@ namespace DataStructure.Tree
          * 4. 没有键值相等的特点
          * 注意：对于二叉排序树，只需要一次中序遍历即可得到排序后的遍历结果
          */
+
         // 二叉树的根节点
-        private Node root;
-        public Node Root
+        private Node<int> _root;
+        public Node<int> Root
         {
             get
             {
-                return this.root;
+                return this._root;
             }
         }
 
@@ -30,7 +31,7 @@ namespace DataStructure.Tree
 
         public MyBinarySearchTree(int data)
         {
-            this.root = new Node(data);
+            this._root = new Node<int>(data);
         }
 
         #region 基本的创建与移除方法
@@ -41,7 +42,7 @@ namespace DataStructure.Tree
         /// <returns></returns>
         public bool IsEmpty()
         {
-            return this.root == null;
+            return this._root == null;
         }
 
         /// <summary>
@@ -50,17 +51,16 @@ namespace DataStructure.Tree
         /// <param name="data"></param>
         public void InsertNode(int data)
         {
-            Node newNode = new Node();
-            newNode.data = data;
+            var newNode = new Node<int> {data = data};
 
-            if (this.root == null)
+            if (this._root == null)
             {
-                this.root = newNode;
+                this._root = newNode;
             }
             else
             {
-                Node currentNode = this.root;
-                Node parentNode = null;
+                var currentNode = this._root;
+                Node<int> parentNode = null;
 
                 while (currentNode != null)
                 {
@@ -94,7 +94,7 @@ namespace DataStructure.Tree
         /// <param name="key"></param>
         public void RemoveNode(int key)
         {
-            Node current = null, parent = null;
+            Node<int> current = null, parent = null;
 
             // 定位节点位置
             current = FindNode(key);
@@ -109,9 +109,9 @@ namespace DataStructure.Tree
             #region 1.如果该节点是叶子节点
             if (current.lchild == null && current.rchild == null) // 如果该节点是叶子节点
             {
-                if (current == this.root) // 如果该节点为根节点
+                if (current == this._root) // 如果该节点为根节点
                 {
-                    this.root = null;
+                    this._root = null;
                 }
                 else if (parent.lchild == current) // 如果该节点为左孩子节点
                 {
@@ -126,15 +126,15 @@ namespace DataStructure.Tree
             #region 2.如果该节点是单支节点
             else if (current.lchild == null || current.rchild == null) // 如果该节点是单支节点 (只有一个左孩子节点或者一个右孩子节点)
             {
-                if (current == this.root) // 如果该节点为根节点
+                if (current == this._root) // 如果该节点为根节点
                 {
                     if (current.lchild == null)
                     {
-                        this.root = current.rchild;
+                        this._root = current.rchild;
                     }
                     else
                     {
-                        this.root = current.lchild;
+                        this._root = current.lchild;
                     }
                 }
                 else
@@ -161,8 +161,8 @@ namespace DataStructure.Tree
             #region 3.如果该节点的左右子树均不为空 
             else // 如果该节点的左右子树均不为空 
             {
-                Node t = current;
-                Node s = current.lchild; // 从p的左子节点开始 
+                var t = current;
+                var s = current.lchild; // 从p的左子节点开始 
                 // 找到p的前驱，即p左子树中值最大的节点 
                 while (s.rchild != null)
                 {
@@ -189,9 +189,9 @@ namespace DataStructure.Tree
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public Node FindNode(int key)
+        public Node<int> FindNode(int key)
         {
-            Node currentNode = this.root;
+            var currentNode = this._root;
             while (currentNode != null && currentNode.data != key)
             {
                 if (currentNode.data < key)
@@ -217,7 +217,7 @@ namespace DataStructure.Tree
         /// <returns></returns>
         public int FindMaxData()
         {
-            Node currentNode = this.root;
+            var currentNode = this._root;
             while (currentNode != null)
             {
                 currentNode = currentNode.rchild;
@@ -231,7 +231,7 @@ namespace DataStructure.Tree
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public bool IsLeafNode(Node p)
+        public bool IsLeafNode(Node<int> p)
         {
             if (p == null)
             {
@@ -246,15 +246,15 @@ namespace DataStructure.Tree
         /// </summary>
         /// <param name="root"></param>
         /// <returns></returns>
-        public int GetDepth(Node root)
+        public int GetDepth(Node<int> root)
         {
             if (root == null)
             {
                 return 0;
             }
 
-            int leftDepth = GetDepth(root.lchild);
-            int rightDepth = GetDepth(root.rchild);
+            var leftDepth = GetDepth(root.lchild);
+            var rightDepth = GetDepth(root.rchild);
 
             if (leftDepth > rightDepth)
             {
@@ -273,7 +273,7 @@ namespace DataStructure.Tree
         /// 前序遍历
         /// </summary>
         /// <param name="node"></param>
-        public void PreOrder(Node node)
+        public void PreOrder(Node<int> node)
         {
             if (node != null)
             {
@@ -288,7 +288,7 @@ namespace DataStructure.Tree
         /// 中序遍历
         /// </summary>
         /// <param name="node"></param>
-        public void MidOrder(Node node)
+        public void MidOrder(Node<int> node)
         {
             if (node != null)
             {
@@ -303,7 +303,7 @@ namespace DataStructure.Tree
         /// 后序遍历
         /// </summary>
         /// <param name="node"></param>
-        public void PostOrder(Node node)
+        public void PostOrder(Node<int> node)
         {
             if (node != null)
             {
@@ -318,14 +318,14 @@ namespace DataStructure.Tree
         /// 层次遍历（广度优先遍历）
         /// </summary>
         /// <param name="node"></param>
-        public void LevelOrder(Node node)
+        public void LevelOrder(Node<int> node)
         {
-            if (root == null)
+            if (_root == null)
             {
                 return;
             }
 
-            Queue<Node> queueNodes = new Queue<Node>();
+            var queueNodes = new Queue<Node<int>>();
             queueNodes.Enqueue(node);
             // 利用队列先进先出的特性存储节点并输出
             while (queueNodes.Count > 0)
@@ -342,33 +342,6 @@ namespace DataStructure.Tree
                 {
                     queueNodes.Enqueue(tempNode.rchild);
                 }
-            }
-        }
-        #endregion
-
-        #region 嵌套类：节点
-        public class Node
-        {
-            public int data { get; set; }
-
-            public Node lchild { get; set; }
-
-            public Node rchild { get; set; }
-
-            public Node()
-            {
-            }
-
-            public Node(int data)
-            {
-                this.data = data;
-            }
-
-            public Node(int data, Node lchild, Node rchild)
-            {
-                this.data = data;
-                this.lchild = lchild;
-                this.rchild = rchild;
             }
         }
         #endregion

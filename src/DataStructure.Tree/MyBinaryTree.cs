@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DataStructure.Tree
@@ -12,13 +11,13 @@ namespace DataStructure.Tree
         /// <summary>
         /// 二叉树的根节点
         /// </summary>
-        private Node<T> root;
+        private readonly Node<T> _root;
 
         public Node<T> Root
         {
             get
             {
-                return this.root;
+                return this._root;
             }
         }
 
@@ -29,7 +28,7 @@ namespace DataStructure.Tree
 
         public MyBinaryTree(T data)
         {
-            this.root = new Node<T>(data);
+            this._root = new Node<T>(data);
         }
         #region 二叉树的顺序存储结构（使用数组）
 
@@ -48,7 +47,7 @@ namespace DataStructure.Tree
         /// <returns></returns>
         public bool IsEmpty()
         {
-            return this.root == null;
+            return this._root == null;
         }
 
         /// <summary>
@@ -58,8 +57,7 @@ namespace DataStructure.Tree
         /// <param name="data"></param>
         public void InsertLeft(Node<T> p, T data)
         {
-            Node<T> tempNode = new Node<T>(data);
-            tempNode.lchild = p.lchild;
+            var tempNode = new Node<T>(data) {lchild = p.lchild};
 
             p.lchild = tempNode;
         }
@@ -71,8 +69,7 @@ namespace DataStructure.Tree
         /// <param name="data"></param>
         public void InsertRight(Node<T> p, T data)
         {
-            Node<T> tempNode = new Node<T>(data);
-            tempNode.rchild = p.rchild;
+            Node<T> tempNode = new Node<T>(data) {rchild = p.rchild};
 
             p.rchild = tempNode;
         }
@@ -89,7 +86,7 @@ namespace DataStructure.Tree
                 return null;
             }
 
-            Node<T> tempNode = p.lchild;
+            var tempNode = p.lchild;
             p.lchild = null;
             return tempNode;
         }
@@ -106,7 +103,7 @@ namespace DataStructure.Tree
                 return null;
             }
 
-            Node<T> tempNode = p.rchild;
+            var tempNode = p.rchild;
             p.rchild = null;
             return tempNode;
         }
@@ -247,7 +244,7 @@ namespace DataStructure.Tree
              * 那么这时stackOut中的出栈顺序则变成了左孩子->右孩子->根节点的顺序，
              * 也就符合了后序遍历的规则。
              */
-            if (root == null)
+            if (_root == null)
             {
                 return;
             }
@@ -295,7 +292,7 @@ namespace DataStructure.Tree
              * 所以，我们这里只需要按照根节点->左孩子->右孩子的入队顺序依次入队，
              * 输出时就可以符合根节点->左孩子->右孩子的规则了。
              */
-            if (root == null)
+            if (_root == null)
             {
                 return;
             }
@@ -320,46 +317,5 @@ namespace DataStructure.Tree
             }
         }
         #endregion
-    }
-
-    /// <summary>
-    /// 二叉树的节点定义
-    /// </summary>
-    /// <typeparam name="T">数据具体类型</typeparam>
-    public class Node<T>
-    {
-        public T data { get; set; }
-        public Node<T> lchild { get; set; }
-        public Node<T> rchild { get; set; }
-
-        /// <summary>
-        /// 无参构造函数
-        /// </summary>
-        public Node()
-        {
-
-        }
-
-        /// <summary>
-        /// 有一个参数的构造函数
-        /// </summary>
-        /// <param name="data"></param>
-        public Node(T data)
-        {
-            this.data = data;
-        }
-
-        /// <summary>
-        /// 有三个参数的构造函数
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="lchild"></param>
-        /// <param name="rchild"></param>
-        public Node(T data, Node<T> lchild, Node<T> rchild)
-        {
-            this.data = data;
-            this.lchild = lchild;
-            this.rchild = rchild;
-        }
     }
 }
