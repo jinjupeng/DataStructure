@@ -6,8 +6,10 @@ namespace DataStructure.Tree
     {
         static void Main(string[] args)
         {
-            MyBinaryTreeBasicTest();
+            // MyBinaryTreeBasicTest();
             // MyBinarySearchTreeTest();
+            // MyBuildTree();
+            MyBuildTree2();
             Console.ReadKey();
         }
 
@@ -90,6 +92,32 @@ namespace DataStructure.Tree
             bst.LevelOrder(bst.Root);
             Console.WriteLine();
         }
+        #endregion
+
+        #region 前序、中序遍历构建二叉树
+
+        public static void MyBuildTree()
+        {
+            var tree = new MyBuildTree();
+            var preOrder = new int[] { 3, 9, 20, 15, 7 };
+            var inOrder = new int[] { 9, 3, 15, 20, 7 };
+            var data = tree.BuildTree(preOrder, inOrder); // 前序、中序构造二叉树
+            Console.WriteLine("Hello World!");
+        }
+
+        #endregion
+
+        #region 中序、后序遍历构建二叉树
+
+        public static void MyBuildTree2()
+        {
+            var tree = new MyBuildTree();
+            var inOrder = new int[] { 9, 3, 15, 20, 7 };
+            var postOrder = new int[] { 9, 15, 7, 20, 3 };
+            var data2 = tree.BuildTree2(inOrder, postOrder); // 中序、后序构造二叉树
+            Console.WriteLine("Hello World!");
+        }
+
         #endregion
     }
 }
