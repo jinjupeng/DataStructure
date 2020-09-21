@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructure.Heap", "DataS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructure.String", "DataStructure.String\DataStructure.String.csproj", "{6F0696F5-E2D5-45DE-A377-727E7A23C060}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructure.Hash", "DataStructure.Hash\DataStructure.Hash.csproj", "{1437085D-EAD7-43BD-A4F8-CAADAF925601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructure.Hash", "DataStructure.Hash\DataStructure.Hash.csproj", "{1437085D-EAD7-43BD-A4F8-CAADAF925601}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructure.Backtracking", "DataStructure.Backtracking\DataStructure.Backtracking.csproj", "{2639926F-E99B-45FD-8A95-FD11893FF677}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{1437085D-EAD7-43BD-A4F8-CAADAF925601}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1437085D-EAD7-43BD-A4F8-CAADAF925601}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1437085D-EAD7-43BD-A4F8-CAADAF925601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2639926F-E99B-45FD-8A95-FD11893FF677}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2639926F-E99B-45FD-8A95-FD11893FF677}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2639926F-E99B-45FD-8A95-FD11893FF677}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2639926F-E99B-45FD-8A95-FD11893FF677}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
