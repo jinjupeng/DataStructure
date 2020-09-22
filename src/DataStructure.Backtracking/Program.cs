@@ -7,12 +7,17 @@ namespace DataStructure.Backtracking
         static void Main(string[] args)
         {
             // Bag01Test();
-            RegexTest();
+            // RegexTest();
+            EightQueensTest();
         }
 
         #region 回溯算法之8皇后问题
 
-
+        public static void EightQueensTest()
+        {
+            var queen = new EightQueens();
+            queen.Cal8Queens(0);
+        }
 
         #endregion
 
