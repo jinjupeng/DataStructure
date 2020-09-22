@@ -8,7 +8,8 @@ namespace DataStructure.Backtracking
         {
             // Bag01Test();
             // RegexTest();
-            EightQueensTest();
+            // EightQueensTest();
+            PermutationsTest();
         }
 
         #region 回溯算法之8皇后问题
@@ -37,7 +38,12 @@ namespace DataStructure.Backtracking
 
         #region 回溯算法之全排列问题
 
-
+        public static void PermutationsTest()
+        {
+            var permutations = new Permutations();
+            var strArray = new string[] { "a", "b", "c" };
+            permutations.Permute(strArray, 0);
+        }
 
         #endregion
 
