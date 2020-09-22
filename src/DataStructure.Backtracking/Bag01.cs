@@ -8,7 +8,7 @@
         public int MaxWeight = int.MinValue; // 存储背包中物品总重量的最大值
 
         /// <summary>
-        /// 设背包可承受重量100，物品个数10，物品重量存储在数组a中，那可以这样调用函数：f(0, 0, a, 10, 100)
+        /// 设背包可承受重量100，物品个数10，物品重量存储在数组a中，则可以这样调用函数：BagCompute(0, 0, a, 10, 100)
         /// </summary>
         /// <param name="i">i表示考察到哪个物品了</param>
         /// <param name="cw">cw表示当前已经装进去的物品的重量和</param>

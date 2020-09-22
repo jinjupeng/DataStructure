@@ -6,8 +6,8 @@ namespace DataStructure.Backtracking
     {
         static void Main(string[] args)
         {
-            Bag01Test();
-            // Console.WriteLine("Hello World!");
+            // Bag01Test();
+            RegexTest();
         }
 
         #region 回溯算法之8皇后问题
@@ -38,7 +38,13 @@ namespace DataStructure.Backtracking
 
         #region 回溯算法之正则表达式匹配问题
 
-        
+        public static void RegexTest()
+        {
+            var pattern = "?a";
+            var text = "cb";
+            var regex = new Regex(pattern.ToCharArray(), pattern.Length);
+            var data = regex.Match(text.ToCharArray(), text.Length);
+        }
 
         #endregion
     }
