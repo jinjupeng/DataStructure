@@ -11,8 +11,8 @@ namespace DataStructure.Backtracking
         /// 数组全排列递归
         /// </summary>
         /// <param name="array"></param>
-        /// <param name="begin"></param>
-        public void Permute(string[] array, int begin)
+        /// <param name="cur"></param>
+        public void Permute(string[] array, int cur)
         {
             /* 全排列 递归实现 
                 递归树：
@@ -22,27 +22,34 @@ namespace DataStructure.Backtracking
             */
 
             // 遍历完了一个全排列结果
-            if (begin == array.Length)
+            if (cur == array.Length)
             {
                 Console.WriteLine(string.Join(",", array));
             }
             else
             {
-                Permute(array, begin + 1);
+                Permute(array, cur + 1);
                 int i;
-                for (i = begin + 1; i < array.Length; i++)
+                for (i = cur + 1; i < array.Length; i++)
                 {
-                    // 交换数组下标位置
-                    var t = array[begin];
-                    array[begin] = array[i];
-                    array[i] = t;
-                    Permute(array, begin + 1);
-                    // 交换数组下标位置
-                    t = array[begin];
-                    array[begin] = array[i];
-                    array[i] = t;
+                    Swap(array, cur, i);
+                    Permute(array, cur + 1);
+                    Swap(array, cur, i);
                 }
             }
+        }
+
+        /// <summary>
+        /// 交换数组下标位置
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        private void Swap(string[] nums, int i, int j)
+        {
+            var temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
         }
     }
 }
