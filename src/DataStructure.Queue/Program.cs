@@ -11,7 +11,8 @@ namespace DataStructure.Queue
         {
             // MyDoubleStackQueueTest();
             // MyArrayQueueTest();
-            MyLinkedListQueueTest();
+            // MyLinkedListQueueTest();
+            MyCircularQueueTest();
         }
 
         #region 双栈实现队列
@@ -57,5 +58,23 @@ namespace DataStructure.Queue
 
         #endregion
 
+        #region 数组实现循环队列测试
+
+        public static void MyCircularQueueTest()
+        {
+            var circularQueue = new MyCircularQueue(3); // 设置长度为 3
+            var a1 = circularQueue.EnQueue(1);  // 返回 true
+            var a2 = circularQueue.EnQueue(2);  // 返回 true
+            var a3 = circularQueue.EnQueue(3);  // 返回 true
+            var a4 = circularQueue.EnQueue(4);  // 返回 false，队列已满
+            var a5 = circularQueue.Rear();  // 返回 3
+            var a6 = circularQueue.IsFull();  // 返回 true
+            var a7 = circularQueue.DeQueue();  // 返回 true
+            var a8 = circularQueue.EnQueue(4);  // 返回 true
+            var a9 = circularQueue.Rear();  // 返回 4
+            circularQueue.PrintAll();
+        }
+
+        #endregion
     }
 }

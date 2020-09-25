@@ -1,63 +1,104 @@
-﻿using System;
-
-namespace DataStructure.Queue
+﻿namespace DataStructure.Queue
 {
     /// <summary>
     /// 数组实现循环队列
     /// </summary>
     public class MyCircularQueue
     {
-        // 数组：items，数组大小：n
-        private string[] items;
-        private int n = 0;
+        private readonly int[] _items; 
+        private readonly int _length; // 循环队列的最大长度
+        private int _count; // 循环队列中元素个数
 
         // head表示队头下标，tail表示队尾下标
-        private int _head = 0;
-        private int _tail = 0;
+        private int _head;
+        private int _tail;
 
-        // 申请一个大小为capacity的数组
-        public MyCircularQueue(int capacity)
+        /// <summary>
+        /// 构造函数，初始化队列长度为k
+        /// </summary>
+        /// <param name="k"></param>
+        public MyCircularQueue(int k)
         {
-            items = new string[capacity];
-            n = capacity;
+            _items = new int[k];
+            _length = k;
+            _count = 0;
         }
 
         /// <summary>
-        /// 入队
+        /// 向循环队列插入一个元素。如果成功插入则返回真
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public bool Enqueue(string item)
+        public bool EnQueue(int value)
         {
-            // 队列满了
-            if ((_tail + 1) % n == _head) return false;
-            items[_tail] = item;
-            _tail = (_tail + 1) % n;
+            if (IsFull()) return false;
+            // 插入元素到队尾
+            _items[_tail] = value;
+            // 队尾索引值+1
+            _tail = (_tail + 1) % _length;
+            // 元素个数+1
+            _count++;
             return true;
         }
 
         /// <summary>
-        /// 出队
+        /// 从循环队列中删除一个元素。如果成功删除则返回真
         /// </summary>
         /// <returns></returns>
-        public string Dequeue()
+        public bool DeQueue()
         {
-            // 如果head == tail 表示队列为空
-            if (_head == _tail) return null;
-            string ret = items[_head];
-            _head = (_head + 1) % n;
-            return ret;
+            if (IsEmpty()) return false;
+            // 队头索引值+1
+            _head = (_head + 1) % _length;
+            // 元素个数-1
+            _count--;
+            return true;
         }
 
-        public void PrintAll()
+        /// <summary>
+        /// 从队首获取元素。如果队列为空，返回 -1 
+        /// </summary>
+        /// <returns></returns>
+        public int Front()
         {
-            if (0 == n) return;
-            for (int i = _head; i % n != _tail; i = (i + 1) % n)
+            if (!IsEmpty())
             {
-                Console.WriteLine(items[i] + " ");
+                return _items[_head];
             }
-
-            Console.ReadLine();
+            return -1;
         }
+
+        /// <summary>
+        /// 获取队尾元素。如果队列为空，返回 -1 
+        /// </summary>
+        /// <returns></returns>
+        public int Rear()
+        {
+            if (IsEmpty()) return -1;
+            // 队尾元素位于队尾索引值减一的位置，但若队尾循环到索引 0 的位置，队尾元素位于数组最后
+            var temp = _tail == 0 ? _length - 1 : _tail - 1;
+            return _items[temp];
+        }
+
+        /// <summary>
+        /// 检查循环队列是否为空
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmpty()
+        {
+            // 队列中元素个数为0，队列空
+            return _count == 0;
+        }
+
+        /// <summary>
+        /// 检查循环队列是否已满
+        /// </summary>
+        /// <returns></returns>
+        public bool IsFull()
+        {
+            // 队列元素个数为数组最大长度，队列满
+            return _count == _length;
+        }
+
     }
 }
