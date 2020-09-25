@@ -1,15 +1,12 @@
-﻿using System;
-
+﻿
 namespace DataStructure.Hash
 {
     /// <summary>
-    /// 实现基于链表法解决冲突问题的散列表
+    /// 设计哈希映射
+    /// MyHashMap是MyHashTable泛型版本的int版本
     /// </summary>
-    /// <typeparam name="K"></typeparam>
-    /// <typeparam name="V"></typeparam>
-    public class HashTable<K, V> where K : IComparable<K>
+    public class MyHashMap
     {
-
         /// <summary>
         /// 散列表默认长度
         /// </summary>
@@ -23,7 +20,7 @@ namespace DataStructure.Hash
         /// <summary>
         /// 初始化散列表数组
         /// </summary>
-        private Entry<K, V>[] _table;
+        private Entry[] _table;
 
         /// <summary>
         /// 实际元素数量
@@ -35,20 +32,20 @@ namespace DataStructure.Hash
         /// </summary>
         private int _use = 0;
 
-        public HashTable()
+        public MyHashMap()
         {
-            _table = new Entry<K, V>[DEFAULT_INITIAL_CAPACITY];
+            _table = new Entry[DEFAULT_INITIAL_CAPACITY];
         }
 
-        public class Entry<K, V>
+        public class Entry
         {
-            public K Key;
+            public int Key;
 
-            public V Value;
+            public int Value;
 
-            public Entry<K, V> Next;
+            public Entry Next;
 
-            public Entry(K key, V value, Entry<K, V> next)
+            public Entry(int key, int value, Entry next)
             {
                 this.Key = key;
                 this.Value = value;
@@ -61,20 +58,20 @@ namespace DataStructure.Hash
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void Put(K key, V value)
+        public void Put(int key, int value)
         {
             var index = Hash(key);
             // 位置未被引用，创建哨兵节点
             if (_table[index] == null)
             {
-                _table[index] = new Entry<K, V>(default, default, null);
+                _table[index] = new Entry(default, default, null);
             }
 
             var tmp = _table[index];
             // 新增节点
             if (tmp.Next == null)
             {
-                tmp.Next = new Entry<K, V>(key, value, null);
+                tmp.Next = new Entry(key, value, null);
                 _size++;
                 _use++;
                 // 动态扩容
@@ -98,7 +95,7 @@ namespace DataStructure.Hash
                 } while (tmp.Next != null);
 
                 var temp = _table[index].Next;
-                _table[index].Next = new Entry<K, V>(key, value, temp);
+                _table[index].Next = new Entry(key, value, temp);
                 _size++;
             }
         }
@@ -120,7 +117,7 @@ namespace DataStructure.Hash
         private void Resize()
         {
             var oldTable = _table;
-            _table = new Entry<K, V>[_table.Length * 2];
+            _table = new Entry[_table.Length * 2];
             _use = 0;
             foreach (var t in oldTable)
             {
@@ -137,9 +134,9 @@ namespace DataStructure.Hash
                     {
                         _use++;
                         // 创建哨兵节点
-                        _table[index] = new Entry<K, V>(default, default, null);
+                        _table[index] = new Entry(default, default, null);
                     }
-                    _table[index].Next = new Entry<K, V>(e.Key, e.Value, _table[index].Next);
+                    _table[index].Next = new Entry(e.Key, e.Value, _table[index].Next);
                 }
             }
         }
@@ -148,7 +145,7 @@ namespace DataStructure.Hash
         /// 删除
         /// </summary>
         /// <param name="key"></param>
-        public void Remove(K key)
+        public void Remove(int key)
         {
             var index = Hash(key);
             var e = _table[index];
@@ -177,13 +174,13 @@ namespace DataStructure.Hash
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public V Get(K key)
+        public int Get(int key)
         {
             var index = Hash(key);
             var e = _table[index];
             if (e == null || e.Next == null)
             {
-                return default;
+                return -1;
             }
             while (e.Next != null)
             {
@@ -193,7 +190,7 @@ namespace DataStructure.Hash
                     return e.Value;
                 }
             }
-            return default;
+            return -1;
         }
     }
 }

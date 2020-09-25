@@ -38,7 +38,7 @@ namespace DataStructure.Hash.LRU
         /// <summary>
         /// 散列表存储key
         /// </summary>
-        private readonly HashTable<K, DNode<K, V>> _table;
+        private readonly MyHashTable<K, DNode<K, V>> _table;
 
         /// <summary>
         /// 双向链表
@@ -89,7 +89,7 @@ namespace DataStructure.Hash.LRU
             _headNode.Next = _tailNode;
             _tailNode.Prev = _headNode;
 
-            _table = new HashTable<K, DNode<K, V>>();
+            _table = new MyHashTable<K, DNode<K, V>>();
         }
 
         public LruBaseHashTable() : this(DEFAULT_CAPACITY)

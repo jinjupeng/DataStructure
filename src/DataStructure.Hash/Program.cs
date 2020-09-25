@@ -7,7 +7,8 @@ namespace DataStructure.Hash
         static void Main(string[] args)
         {
             // LruCacheTest();
-            MyHashSetTest();
+            // MyHashSetTest();
+            MyHashMapTest();
         }
 
         #region LRU（最近最少未使用算法）测试
@@ -42,6 +43,24 @@ namespace DataStructure.Hash
             var a3 = hashSet.Contains(2);    // 返回 true
             hashSet.Remove(2);
             var a4 = hashSet.Contains(2);    // 返回  false (已经被删除)
+
+        }
+
+        #endregion
+
+        #region 设计哈希映射测试
+
+        public static void MyHashMapTest()
+        {
+            var hashMap = new MyHashMap();
+            hashMap.Put(1, 1);
+            hashMap.Put(2, 2);
+            var a1 = hashMap.Get(1);            // 返回 1
+            var a2 = hashMap.Get(3);            // 返回 -1 (未找到)
+            hashMap.Put(2, 1);         // 更新已有的值
+            var a4 = hashMap.Get(2);            // 返回 1 
+            hashMap.Remove(2);         // 删除键为2的数据
+            var a6 = hashMap.Get(2);            // 返回 -1 (未找到) 
 
         }
 
