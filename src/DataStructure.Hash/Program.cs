@@ -6,7 +6,8 @@ namespace DataStructure.Hash
     {
         static void Main(string[] args)
         {
-            LruCacheTest();
+            // LruCacheTest();
+            MyHashSetTest();
         }
 
         #region LRU（最近最少未使用算法）测试
@@ -23,6 +24,24 @@ namespace DataStructure.Hash
             var c = cache.Get(1);       // 返回  0 (未找到)
             var d = cache.Get(3);       // 返回  3
             var e = cache.Get(4);       // 返回  4
+
+        }
+
+        #endregion
+
+        #region 设计哈希集合测试
+
+        public static void MyHashSetTest()
+        {
+            var hashSet = new MyHashSet();
+            hashSet.Add(1);
+            hashSet.Add(2);
+            var a1 = hashSet.Contains(1);    // 返回 true
+            var a2 = hashSet.Contains(3);    // 返回 false (未找到)
+            hashSet.Add(2);
+            var a3 = hashSet.Contains(2);    // 返回 true
+            hashSet.Remove(2);
+            var a4 = hashSet.Contains(2);    // 返回  false (已经被删除)
 
         }
 
