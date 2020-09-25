@@ -12,23 +12,21 @@ namespace DataStructure.Sort.SortImpl
         ///<param name="high">下标开始位置，向左查找</param>
         public static void MergeSortImpl(List<int> list, int low, int high)
         {
-            if (low < high)
-            {
-                int mid = (low + high) / 2;
-                MergeSortImpl(list, low, mid); // 左边归并排序，使得左子序列有序
-                MergeSortImpl(list, mid + 1, high); // 右边归并排序，使得右子序列有序
-                Merge(list, low, mid, high); // 将两个有序子列表合并操作
-            }
+            if (low >= high) return;
+            var mid = (low + high) / 2;
+            MergeSortImpl(list, low, mid); // 左边归并排序，使得左子序列有序
+            MergeSortImpl(list, mid + 1, high); // 右边归并排序，使得右子序列有序
+            Merge(list, low, mid, high); // 将两个有序子列表合并操作
         }
 
         private static void Merge(List<int> list, int low, int mid, int high)
         {
             // listTmp为临时存放空间，存放合并后的数据
-            List<int> listTmp = new List<int>(list.Count);
+            var listTmp = new List<int>(list.Count);
 
             #region 为空list赋值，因为空list不能直接用下标赋值，会报错
 
-            for (int x = 0; x < list.Count; x++)
+            for (var x = 0; x < list.Count; x++)
             {
                 listTmp.Add(0);
             }
@@ -36,9 +34,9 @@ namespace DataStructure.Sort.SortImpl
             #endregion
 
 
-            int i = low;
-            int j = mid + 1; // 右序列下标
-            int k = 0;// k为临时列表listTmp的下标
+            var i = low;
+            var j = mid + 1; // 右序列下标
+            var k = 0;// k为临时列表listTmp的下标
             while (i <= mid && j <= high)
             {
                 // listTmp[k++] = (list[i] <= list[j]) ? list[i++] : list[j++];

@@ -6,20 +6,18 @@ namespace DataStructure.Sort.SortImpl
     {
         public static void QuickSortImpl(T[] arr, int low, int high)
         {
-            if (low < high)
-            {
-                int index = Partition(arr, low, high);
-                // 对左区间递归排序
-                QuickSortImpl(arr, low, index - 1);
-                // 对右区间递归排序
-                QuickSortImpl(arr, index + 1, high);
-            }
+            if (low >= high) return;
+            var index = Partition(arr, low, high);
+            // 对左区间递归排序
+            QuickSortImpl(arr, low, index - 1);
+            // 对右区间递归排序
+            QuickSortImpl(arr, index + 1, high);
         }
 
         private static int Partition(T[] arr, int low, int high)
         {
             int i = low, j = high;
-            T temp = arr[i]; // 确定第一个元素作为"基准值"
+            var temp = arr[i]; // 确定第一个元素作为"基准值"
 
             while (i < j)
             {

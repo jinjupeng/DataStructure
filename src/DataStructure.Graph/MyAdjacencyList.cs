@@ -45,13 +45,13 @@ namespace DataStructure.Graph
         /// <param name="to">尾顶点data</param>
         public void AddEdge(T from, T to)
         {
-            Vertex<T> fromVertex = Find(from);
+            var fromVertex = Find(from);
             if (fromVertex == null)
             {
                 throw new ArgumentException("头顶点不存在！");
             }
 
-            Vertex<T> toVertex = Find(to);
+            var toVertex = Find(to);
             if (toVertex == null)
             {
                 throw new ArgumentException("尾顶点不存在！");
@@ -76,7 +76,7 @@ namespace DataStructure.Graph
             else
             {
                 Node temp = null;
-                Node node = fromVertex.FirstEdge;
+                var node = fromVertex.FirstEdge;
 
                 do
                 {
@@ -89,7 +89,7 @@ namespace DataStructure.Graph
                     node = node.Next;
                 } while (node != null);
 
-                Node newNode = new Node(toVertex);
+                var newNode = new Node(toVertex);
                 temp.Next = newNode;
             }
         }
@@ -101,13 +101,13 @@ namespace DataStructure.Graph
         /// <param name="to">尾节点data</param>
         public void AddDirectedEdge(T from, T to)
         {
-            Vertex<T> fromVertex = Find(from);
+            var fromVertex = Find(from);
             if (fromVertex == null)
             {
                 throw new ArgumentException("头顶点不存在！");
             }
 
-            Vertex<T> toVertex = Find(to);
+            var toVertex = Find(to);
             if (toVertex == null)
             {
                 throw new ArgumentException("尾顶点不存在！");
@@ -122,13 +122,13 @@ namespace DataStructure.Graph
         /// <param name="isDirectedGraph">是否是有向图</param>
         public string GetGraphInfo(bool isDirectedGraph = false)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Vertex<T> v in _items)
+            var sb = new StringBuilder();
+            foreach (var v in _items)
             {
                 sb.Append(v.Data.ToString() + ":");
                 if (v.FirstEdge != null)
                 {
-                    Node temp = v.FirstEdge;
+                    var temp = v.FirstEdge;
                     while (temp != null)
                     {
                         if (isDirectedGraph)
@@ -155,7 +155,7 @@ namespace DataStructure.Graph
         /// </summary>
         private bool Contains(T item)
         {
-            foreach (Vertex<T> v in _items)
+            foreach (var v in _items)
             {
                 if (v.Data.Equals(item))
                 {
@@ -171,7 +171,7 @@ namespace DataStructure.Graph
         /// </summary>
         private Vertex<T> Find(T item)
         {
-            foreach (Vertex<T> v in _items)
+            foreach (var v in _items)
             {
                 if (v.Data.Equals(item))
                 {
@@ -187,7 +187,7 @@ namespace DataStructure.Graph
         /// </summary>
         public void InitVisited()
         {
-            foreach (Vertex<T> v in _items)
+            foreach (var v in _items)
             {
                 v.IsVisited = false;
             }
@@ -213,13 +213,13 @@ namespace DataStructure.Graph
         {
             v.IsVisited = true; // 首先将访问标志设为true标识为已访问
             Console.Write(v.Data.ToString() + " "); // 进行访问操作：这里是输出顶点data
-            Queue<Vertex<T>> verQueue = new Queue<Vertex<T>>(); // 使用队列存储
+            var verQueue = new Queue<Vertex<T>>(); // 使用队列存储
             verQueue.Enqueue(v);
 
             while (verQueue.Count > 0)
             {
-                Vertex<T> w = verQueue.Dequeue();
-                Node node = w.FirstEdge;
+                var w = verQueue.Dequeue();
+                var node = w.FirstEdge;
                 // 访问此顶点的所有邻接节点
                 while (node != null)
                 {
@@ -251,8 +251,8 @@ namespace DataStructure.Graph
         private void DFS(Vertex<T> v)
         {
             v.IsVisited = true; // 首先将访问标志设为true标识为已访问
-            Console.Write(v.Data.ToString() + " "); // 进行访问操作：这里是输出顶点data
-            Node node = v.FirstEdge;
+            Console.Write(v.Data + " "); // 进行访问操作：这里是输出顶点data
+            var node = v.FirstEdge;
 
             while (node != null)
             {

@@ -44,7 +44,7 @@
         /// <returns>返回查找元素值的下标</returns>
         public static int BinarySearch(int[] sortedArray, int start, int end, int key)
         {
-            int mid = start + (end - start) / 2;
+            var mid = start + (end - start) / 2;
             if (sortedArray[mid] == key)
             {
                 return mid;

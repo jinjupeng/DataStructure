@@ -64,7 +64,7 @@ namespace DataStructure.Array.LRU
 
         public void PrintAll()
         {
-            for (int i = 0; i < CachedList.Count; i++)
+            for (var i = 0; i < CachedList.Count; i++)
             {
                 Console.Write(CachedList.Find(i) + " ");
             }

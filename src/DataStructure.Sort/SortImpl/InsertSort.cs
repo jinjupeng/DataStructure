@@ -38,12 +38,12 @@
         public static void StraightInsertSortWithSentryImpl(int[] arr)
         {
             // 遍历待插入的数(从第二位开始)
-            for (int i = 1; i < arr.Length; i++)
+            for (var i = 1; i < arr.Length; i++)
             {
                 // 待插入的数
                 var temp = arr[i];
                 //（j为已排序的待插入的位置序号）
-                int j = i - 1;
+                var j = i - 1;
 
                 // 若已排序的数大于待插入数，则往后移一位
                 while (j >= 0 && arr[j] > temp)

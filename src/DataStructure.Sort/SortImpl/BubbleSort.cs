@@ -15,11 +15,11 @@ namespace DataStructure.Sort.SortImpl
                 return null;
             }
 
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 // 设定一个标记，若为true,则表示此次循环没有进行交换，也就是待排序已经有序，排序已经完成
-                bool flag = true;
-                for (int j = i + 1; j < list.Count; j++)
+                var flag = true;
+                for (var j = i + 1; j < list.Count; j++)
                 {
                     if (list[i] > list[j])
                     {

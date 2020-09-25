@@ -51,7 +51,7 @@ namespace DataStructure.Array
             }
 
             // to loop array from end until finding the target index
-            for (int k = Count; k > index; k--)
+            for (var k = Count; k > index; k--)
             {
                 _data[k] = _data[k - 1];
             }
@@ -87,7 +87,7 @@ namespace DataStructure.Array
             if (_data[0].Equals(val)) return 0;
             if (_data[Count - 1].CompareTo(val) == 0) return Count - 1;
 
-            int start = 1;
+            var start = 1;
             while (start < Count - 1)
             {
                 if (_data[start].CompareTo(val) == 0) return start;

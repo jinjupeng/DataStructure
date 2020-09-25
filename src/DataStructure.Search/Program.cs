@@ -10,7 +10,7 @@ namespace DataStructure.Search
 
             var binarySearch = new BinarySearch();
             var array = new int[] { 1, 3, 5, 6 };
-            var data = binarySearch.BinarySearchImpl(array, 0);
+            var data = binarySearch.IndexOf(array, 5);
 
             #endregion
             Console.WriteLine("Hello World!");

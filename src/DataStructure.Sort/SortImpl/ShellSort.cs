@@ -13,7 +13,7 @@ namespace DataStructure.Sort.SortImpl
             var h = 3;
             while (h > 0)
             {
-                for (int i = h; i < list.Count; i++)
+                for (var i = h; i < list.Count; i++)
                 {
                     var tmp = list[i];
                     var j = i;

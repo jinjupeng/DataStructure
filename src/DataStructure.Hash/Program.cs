@@ -13,7 +13,7 @@ namespace DataStructure.Hash
 
         public static void LruCacheTest()
         {
-            var cache = new LRUBaseHashTable<int, int>(2);
+            var cache = new LruBaseHashTable<int, int>(2);
             cache.Add(1, 1);
             cache.Add(2, 2);
             var a = cache.Get(1);       // 返回  1

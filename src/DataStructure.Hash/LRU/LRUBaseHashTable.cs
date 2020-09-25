@@ -7,7 +7,7 @@ namespace DataStructure.Hash.LRU
     /// </summary>
     /// <typeparam name="K"></typeparam>
     /// <typeparam name="V"></typeparam>
-    public class LRUBaseHashTable<K, V> where K: IComparable<K>
+    public class LruBaseHashTable<K, V> where K: IComparable<K>
     {
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace DataStructure.Hash.LRU
 
         }
 
-        public LRUBaseHashTable(int capacity)
+        public LruBaseHashTable(int capacity)
         {
             this._length = 0;
             this._capacity = capacity;
@@ -92,7 +92,7 @@ namespace DataStructure.Hash.LRU
             _table = new HashTable<K, DNode<K, V>>();
         }
 
-        public LRUBaseHashTable() : this(DEFAULT_CAPACITY)
+        public LruBaseHashTable() : this(DEFAULT_CAPACITY)
         {
         }
 
@@ -103,16 +103,16 @@ namespace DataStructure.Hash.LRU
         /// <param name="value"></param>
         public void Add(K key, V value)
         {
-            DNode<K, V> node = _table.Get(key);
+            var node = _table.Get(key);
             if (node == null)
             {
-                DNode<K, V> newNode = new DNode<K, V>(key, value);
+                var newNode = new DNode<K, V>(key, value);
                 _table.Put(key, newNode);
                 AddNode(newNode);
 
                 if (++_length > _capacity)
                 {
-                    DNode<K, V> tail = PopTail();
+                    var tail = PopTail();
                     _table.Remove(tail.Key);
                     _length--;
                 }
@@ -143,7 +143,7 @@ namespace DataStructure.Hash.LRU
         /// <returns></returns>
         private DNode<K, V> PopTail()
         {
-            DNode<K, V> node = _tailNode.Prev;
+            var node = _tailNode.Prev;
             RemoveNode(node);
             return node;
         }
@@ -175,7 +175,7 @@ namespace DataStructure.Hash.LRU
         /// <returns></returns>
         public V Get(K key)
         {
-            DNode<K, V> node = _table.Get(key);
+            var node = _table.Get(key);
             if (node == null)
             {
                 return default;
@@ -191,7 +191,7 @@ namespace DataStructure.Hash.LRU
         /// <param name="key"></param>
         public void Remove(K key)
         {
-            DNode<K, V> node = _table.Get(key);
+            var node = _table.Get(key);
             if (node == null)
             {
                 return;
@@ -204,7 +204,7 @@ namespace DataStructure.Hash.LRU
 
         private void PrintAll()
         {
-            DNode<K, V> node = _headNode.Next;
+            var node = _headNode.Next;
             while (node.Next != null)
             {
                 Console.Write(node.Value + ",");

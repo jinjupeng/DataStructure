@@ -10,17 +10,16 @@ namespace DataStructure.Sort.SortImpl
         /// <param name="arr"></param>
         public static void HeapSortImpl(T[] arr)
         {
-            int n = arr.Length; // 获取序列的长度
+            var n = arr.Length; // 获取序列的长度
             // 构造初始堆
             for (int i = n / 2 - 1; i >= 0; i--)
             {
                 Sift(arr, i, n - 1);
             }
             // 进行堆排序
-            T temp;
             for (int i = n - 1; i >= 1; i--)
             {
-                temp = arr[0];       // 获取堆顶元素
+                var temp = arr[0];
                 arr[0] = arr[i];     // 将堆中最后一个元素移动到堆顶
                 arr[i] = temp;       // 最大元素归位,下一次不会再参与计算
 
@@ -33,7 +32,7 @@ namespace DataStructure.Sort.SortImpl
             // i为欲调整子树的根节点索引号，j为这个节点的左孩子
             int i = low, j = 2 * i + 1;
             // temp记录根节点的值
-            T temp = arr[i];
+            var temp = arr[i];
 
             while (j <= high)
             {
