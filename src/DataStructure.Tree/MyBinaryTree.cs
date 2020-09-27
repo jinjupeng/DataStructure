@@ -11,24 +11,13 @@ namespace DataStructure.Tree
         /// <summary>
         /// 二叉树的根节点
         /// </summary>
-        private readonly Node<T> _root;
+        public Node<T> Root { get; }
 
-        public Node<T> Root
-        {
-            get
-            {
-                return this._root;
-            }
-        }
-
-        public MyBinaryTree()
-        {
-
-        }
+        public MyBinaryTree() { }
 
         public MyBinaryTree(T data)
         {
-            this._root = new Node<T>(data);
+            this.Root = new Node<T>(data);
         }
         #region 二叉树的顺序存储结构（使用数组）
 
@@ -47,7 +36,7 @@ namespace DataStructure.Tree
         /// <returns></returns>
         public bool IsEmpty()
         {
-            return this._root == null;
+            return this.Root == null;
         }
 
         /// <summary>
@@ -244,7 +233,7 @@ namespace DataStructure.Tree
              * 那么这时stackOut中的出栈顺序则变成了左孩子->右孩子->根节点的顺序，
              * 也就符合了后序遍历的规则。
              */
-            if (_root == null)
+            if (Root == null)
             {
                 return;
             }
@@ -292,7 +281,7 @@ namespace DataStructure.Tree
              * 所以，我们这里只需要按照根节点->左孩子->右孩子的入队顺序依次入队，
              * 输出时就可以符合根节点->左孩子->右孩子的规则了。
              */
-            if (_root == null)
+            if (Root == null)
             {
                 return;
             }

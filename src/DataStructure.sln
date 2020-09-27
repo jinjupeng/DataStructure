@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructure.Hash", "DataS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStructure.Backtracking", "DataStructure.Backtracking\DataStructure.Backtracking.csproj", "{2639926F-E99B-45FD-8A95-FD11893FF677}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicProgramming", "DynamicProgramming\DynamicProgramming.csproj", "{A58E33D1-8C25-43DC-97AB-336FD678377A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicProgramming", "DynamicProgramming\DynamicProgramming.csproj", "{A58E33D1-8C25-43DC-97AB-336FD678377A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStructure.Recursion", "DataStructure.Recursion\DataStructure.Recursion.csproj", "{88747C0F-73F6-42AF-A61A-1D7F61ACA012}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{A58E33D1-8C25-43DC-97AB-336FD678377A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A58E33D1-8C25-43DC-97AB-336FD678377A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A58E33D1-8C25-43DC-97AB-336FD678377A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88747C0F-73F6-42AF-A61A-1D7F61ACA012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88747C0F-73F6-42AF-A61A-1D7F61ACA012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88747C0F-73F6-42AF-A61A-1D7F61ACA012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88747C0F-73F6-42AF-A61A-1D7F61ACA012}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
