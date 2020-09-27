@@ -18,20 +18,13 @@ namespace DataStructure.Tree
          */
 
         // 二叉树的根节点
-        private Node<int> _root;
-        public Node<int> Root
-        {
-            get
-            {
-                return this._root;
-            }
-        }
+        public Node<int> Tree { get; private set; }
 
         public MyBinarySearchTree() { }
 
         public MyBinarySearchTree(int data)
         {
-            this._root = new Node<int>(data);
+            this.Tree = new Node<int>(data);
         }
 
         #region 基本的创建与移除方法
@@ -42,7 +35,7 @@ namespace DataStructure.Tree
         /// <returns></returns>
         public bool IsEmpty()
         {
-            return this._root == null;
+            return this.Tree == null;
         }
 
         /// <summary>
@@ -51,39 +44,34 @@ namespace DataStructure.Tree
         /// <param name="data"></param>
         public void InsertNode(int data)
         {
-            var newNode = new Node<int> {data = data};
-
-            if (this._root == null)
+            if (this.Tree == null)
             {
-                this._root = newNode;
+                this.Tree = new Node<int>(data);
             }
-            else
+
+            var currentNode = Tree;
+            while (currentNode != null)
             {
-                var currentNode = this._root;
-                Node<int> parentNode = null;
-
-                while (currentNode != null)
+                // 若插入的元素值不小于当前节点值，则将元素插入到当前节点右子树中
+                if (data > currentNode.data)
                 {
-                    parentNode = currentNode;
-                    if (currentNode.data < data)
+                    if (currentNode.rchild == null)
                     {
-                        currentNode = currentNode.rchild;
+                        currentNode.rchild = new Node<int>(data);
+                        return;
                     }
-                    else
-                    {
-                        currentNode = currentNode.lchild;
-                    }
-                }
-
-                if (parentNode.data < data)
-                {
-                    // 若插入的元素值小于根节点值，则将元素插入到左子树中
-                    parentNode.rchild = newNode;
+                    currentNode = currentNode.rchild;
                 }
                 else
                 {
-                    // 若插入的元素值不小于根节点值，则将元素插入到右子树中
-                    parentNode.lchild = newNode;
+                    // 若插入的元素值小于当前节点值，则将元素插入到当前节点左子树中
+                    // data < p.data
+                    if (currentNode.lchild == null)
+                    {
+                        currentNode.lchild = new Node<int>(data);
+                        return;
+                    }
+                    currentNode = currentNode.lchild;
                 }
             }
         }
@@ -91,121 +79,86 @@ namespace DataStructure.Tree
         /// <summary>
         /// 移除一个旧节点
         /// </summary>
-        /// <param name="key"></param>
-        public void RemoveNode(int key)
+        /// <param name="data"></param>
+        public void RemoveNode(int data)
         {
-            Node<int> current = null, parent = null;
-
-            // 定位节点位置
-            current = FindNode(key);
-
-            // 没找到data为key的节点
-            if (current == null)
+            var p = Tree; // p指向要删除的节点，初始化指向根节点
+            Node<int> pp = null; // pp记录的是p的父节点
+            while (p != null && p.data != data)
             {
-                Console.WriteLine("没有找到data为{0}的节点!", key);
-                return;
+                pp = p;
+                p = data > p.data ? p.rchild : p.lchild;
+            }
+            if (p == null) return; // 没有找到
+
+            // 要删除的节点有两个子节点
+            if (p.lchild != null && p.rchild != null)
+            { // 查找右子树中最小节点
+                var minP = p.rchild;
+                var minPp = p; // minPP表示minP的父节点
+                while (minP.lchild != null)
+                {
+                    minPp = minP;
+                    minP = minP.lchild;
+                }
+                p.data = minP.data; // 将minP的数据替换到p中
+                p = minP; // 下面就变成了删除minP了
+                pp = minPp;
             }
 
-            #region 1.如果该节点是叶子节点
-            if (current.lchild == null && current.rchild == null) // 如果该节点是叶子节点
-            {
-                if (current == this._root) // 如果该节点为根节点
-                {
-                    this._root = null;
-                }
-                else if (parent.lchild == current) // 如果该节点为左孩子节点
-                {
-                    parent.lchild = null;
-                }
-                else if (parent.rchild == current) // 如果该节点为右孩子节点
-                {
-                    parent.rchild = null;
-                }
-            }
-            #endregion
-            #region 2.如果该节点是单支节点
-            else if (current.lchild == null || current.rchild == null) // 如果该节点是单支节点 (只有一个左孩子节点或者一个右孩子节点)
-            {
-                if (current == this._root) // 如果该节点为根节点
-                {
-                    if (current.lchild == null)
-                    {
-                        this._root = current.rchild;
-                    }
-                    else
-                    {
-                        this._root = current.lchild;
-                    }
-                }
-                else
-                {
-                    if (parent.lchild == current && current.lchild != null)  // p是q的左孩子且p有左孩子
-                    {
-                        parent.lchild = current.lchild;
-                    }
-                    else if (parent.lchild == current && current.rchild != null) // p是q的左孩子且p有右孩子
-                    {
-                        parent.rchild = current.rchild;
-                    }
-                    else if (parent.rchild == current && current.lchild != null) // p是q的右孩子且p有左孩子
-                    {
-                        parent.rchild = current.lchild;
-                    }
-                    else // p是q的右孩子且p有右孩子
-                    {
-                        parent.rchild = current.rchild;
-                    }
-                }
-            }
-            #endregion
-            #region 3.如果该节点的左右子树均不为空 
-            else // 如果该节点的左右子树均不为空 
-            {
-                var t = current;
-                var s = current.lchild; // 从p的左子节点开始 
-                // 找到p的前驱，即p左子树中值最大的节点 
-                while (s.rchild != null)
-                {
-                    t = s;
-                    s = s.rchild;
-                }
+            // 删除节点是叶子节点或者仅有一个子节点
+            Node<int> child; // p的子节点
+            if (p.lchild != null) child = p.lchild;
+            else if (p.rchild != null) child = p.rchild;
+            else child = null;
 
-                current.data = s.data; // 把节点s的值赋给p
-
-                if (t == current)
-                {
-                    current.lchild = s.lchild;
-                }
-                else
-                {
-                    current.rchild = s.rchild;
-                }
-            }
-            #endregion
+            if (pp == null) Tree = child; // 删除的是根节点
+            else if (pp.lchild == p) pp.lchild = child;
+            else pp.rchild = child;
         }
 
         /// <summary>
-        /// 根据Key查找某个节点
+        /// 根据data查找某个节点
         /// </summary>
-        /// <param name="key"></param>
+        /// <param name="data"></param>
         /// <returns></returns>
-        public Node<int> FindNode(int key)
+        public Node<int> FindNode(int data)
         {
-            var currentNode = this._root;
-            while (currentNode != null && currentNode.data != key)
+            var currentNode = this.Tree;
+            while (currentNode != null)
             {
-                if (currentNode.data < key)
+                if (currentNode.data < data)
                 {
                     currentNode = currentNode.rchild;
                 }
-                else if (currentNode.data > key)
+                else if (currentNode.data > data)
                 {
                     currentNode = currentNode.lchild;
                 }
                 else
                 {
-                    break;
+                    return currentNode;
                 }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 查找最小值
+        /// </summary>
+        /// <returns></returns>
+        public Node<int> FindMin()
+        {
+            if (Tree == null)
+            {
+                return null;
+            }
+
+            var currentNode = Tree;
+            while (currentNode.lchild != null)
+            {
+                currentNode = currentNode.lchild;
             }
 
             return currentNode;
@@ -215,15 +168,19 @@ namespace DataStructure.Tree
         /// 查找最大值
         /// </summary>
         /// <returns></returns>
-        public int FindMaxData()
+        public Node<int> FindMax()
         {
-            var currentNode = this._root;
-            while (currentNode != null)
+            if (Tree == null)
+            {
+                return null;
+            }
+            var currentNode = this.Tree;
+            while (currentNode.rchild != null)
             {
                 currentNode = currentNode.rchild;
             }
 
-            return currentNode.data;
+            return currentNode;
         }
 
         /// <summary>
@@ -244,17 +201,17 @@ namespace DataStructure.Tree
         /// <summary>
         /// 计算二叉树的深度
         /// </summary>
-        /// <param name="root"></param>
+        /// <param name="tree"></param>
         /// <returns></returns>
-        public int GetDepth(Node<int> root)
+        public int GetDepth(Node<int> tree)
         {
-            if (root == null)
+            if (tree == null)
             {
                 return 0;
             }
 
-            var leftDepth = GetDepth(root.lchild);
-            var rightDepth = GetDepth(root.rchild);
+            var leftDepth = GetDepth(tree.lchild);
+            var rightDepth = GetDepth(tree.rchild);
 
             if (leftDepth > rightDepth)
             {
@@ -320,7 +277,7 @@ namespace DataStructure.Tree
         /// <param name="node"></param>
         public void LevelOrder(Node<int> node)
         {
-            if (_root == null)
+            if (Tree == null)
             {
                 return;
             }

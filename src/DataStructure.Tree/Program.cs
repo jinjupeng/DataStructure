@@ -7,9 +7,9 @@ namespace DataStructure.Tree
         static void Main(string[] args)
         {
             // MyBinaryTreeBasicTest();
-            // MyBinarySearchTreeTest();
+            MyBinarySearchTreeTest();
             // MyBuildTree();
-            MyBuildTree2();
+            // MyBuildTree2();
             Console.ReadKey();
         }
 
@@ -80,17 +80,21 @@ namespace DataStructure.Tree
             bst.InsertNode(13);
 
             Console.WriteLine("----------First LevelOrder----------");
-            bst.LevelOrder(bst.Root);
+            bst.LevelOrder(bst.Tree);
             Console.WriteLine();
 
             Console.WriteLine("----------二叉搜索树的中序遍历----------");
-            bst.MidOrder(bst.Root);
+            bst.MidOrder(bst.Tree);
             Console.WriteLine();
 
             bst.RemoveNode(6);
             Console.WriteLine("----------LevelOrder Again----------");
-            bst.LevelOrder(bst.Root);
+            bst.LevelOrder(bst.Tree);
             Console.WriteLine();
+            Console.WriteLine("-----------二叉搜索树最大值");
+            Console.WriteLine(bst.FindMax().data);
+            Console.WriteLine("-----------二叉搜索树最小值");
+            Console.WriteLine(bst.FindMin().data);
         }
         #endregion
 
