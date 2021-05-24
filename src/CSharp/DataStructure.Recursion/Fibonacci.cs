@@ -1,4 +1,6 @@
-﻿namespace DataStructure.Recursion
+﻿using System;
+
+namespace DataStructure.Recursion
 {
     public class Fibonacci
     {
@@ -28,6 +30,44 @@
                 }
             }
             return ans;
+        }
+
+        /// <summary>
+        /// 递归实现
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public int FibByRecurse(int n)
+        {
+            if (n == 0)
+            {
+                return 0;
+            }
+            if (n == 1)
+            {
+                return 1;
+            }
+
+            return FibByRecurse(n - 2) + FibByRecurse(n - 1);
+        }
+
+        
+        public int FibByRecurse2(int n)
+        {
+            if (n <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+
+            int a = 1;
+            int b = 1;
+
+            for (int i = 3; i <= n; i++)
+            {
+                b = checked(a + b); // when n>46 memory will  overflow
+                a = b - a;
+            }
+            return b;
         }
     }
 }
