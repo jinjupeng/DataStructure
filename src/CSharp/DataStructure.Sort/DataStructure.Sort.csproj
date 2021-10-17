@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DataStructure.Array\DataStructure.Array.csproj" />
+  </ItemGroup>
+
 </Project>

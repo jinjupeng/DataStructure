@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataStructure.Array;
+using DataStructure.Sort.SortImpl;
+using System;
 
 namespace DataStructure.Sort
 {
@@ -6,6 +8,20 @@ namespace DataStructure.Sort
     {
         static void Main(string[] args)
         {
+            var arr = new Array<int>(10);
+            Random rnd = new Random(100);
+            for (int i = 0; i < 10; i++)
+            {
+                arr.Insert(i, rnd.Next(0, 100));
+            }
+
+            Console.WriteLine("Before sorting: ");
+            arr.DisplayElements();
+            Console.WriteLine("During sorting: ");
+            BubbleSort.BubbleSortImpl(arr);
+            Console.WriteLine("After sorting: ");
+            arr.DisplayElements();
+
             //int[] testDatas = InitializeData(10000);
 
             //CodeTimer.Time("MergeSort_Test", 1, () =>
@@ -14,14 +30,14 @@ namespace DataStructure.Sort
             //});
             //PrintData(testDatas);
 
-            int[] smallDatas = { 3, 6, 5, 9, 7, 1, 8, 2, 4 };
-            SortingHelper<int>.BubbleSort(smallDatas, new Comparison<int>((p1, p2) => p2 - p1));
-            PrintData(smallDatas);
+            //int[] smallDatas = { 3, 6, 5, 9, 7, 1, 8, 2, 4 };
+            //SortingHelper<int>.BubbleSort(smallDatas, new Comparison<int>((p1, p2) => p2 - p1));
+            //PrintData(smallDatas);
 
-            Console.ReadKey();
         }
 
         #region 初始化数组
+
         static int[] InitializeData(int length = 100000)
         {
             int[] arrNumber = new int[length];
@@ -43,9 +59,11 @@ namespace DataStructure.Sort
 
             return arrNumber;
         }
+
         #endregion
 
         #region 打印数组
+
         static void PrintData(int[] arr)
         {
             Console.WriteLine("----------------------------------------------------\r\n");
@@ -65,6 +83,7 @@ namespace DataStructure.Sort
             }
             Console.WriteLine("\r\n----------------------------------------------------");
         }
+
         #endregion
     }
 }

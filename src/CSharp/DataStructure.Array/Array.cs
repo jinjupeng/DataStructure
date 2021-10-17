@@ -12,7 +12,12 @@ namespace DataStructure.Array
         private readonly int _capacity;
 
         /// <summary>
-        /// 构造函数
+        /// 定义数组中保存的实际个数
+        /// </summary>
+        public int Count { get; private set; }
+
+        /// <summary>
+        /// 有参构造函数
         /// </summary>
         /// <param name="capacity"></param>
         public Array(int capacity)
@@ -22,14 +27,29 @@ namespace DataStructure.Array
             Count = 0;
         }
 
+        /// <summary>
+        /// 无参构造函数
+        /// </summary>
         public Array() : this(10)
         {
         }
 
-        /// <summary>
-        /// 定义数组中保存的实际个数
-        /// </summary>
-        public int Count { get; private set; }
+        public T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= _data.Length)
+                {
+                    //... Out of range index Exception
+                    throw new IndexOutOfRangeException("Index was outside the bounds of the list");
+                }
+                return _data[index];
+            }
+            set
+            {
+                _data[index] = value;
+            }
+        }
 
         /// <summary>
         /// 根据索引位置插入元素
@@ -156,6 +176,18 @@ namespace DataStructure.Array
         public bool IsEmpty()
         {
             return Count == 0;
+        }
+
+        /// <summary>
+        /// 显示数组中所有元素数据，仅供测试
+        /// </summary>
+        public void DisplayElements()
+        {
+            for(int i = 0; i < Count; i++)
+            {
+                Console.Write(_data[i] + " ");
+            }
+            Console.WriteLine();
         }
     }
 }

@@ -1,40 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using DataStructure.Array;
 
 namespace DataStructure.Sort.SortImpl
 {
     public class BubbleSort
     {
-		///<summary>
+        ///<summary>
         /// 冒泡排序--稳定排序
         ///</summary>
-        ///<param name="list"></param>
-        public static List<int> BubbleSortImpl(List<int> list)
+        ///<param name="arr"></param>
+        public static void BubbleSortImpl(Array<int> arr)
         {
-            if (list == null || list.Count < 1)
-            {
-                return null;
-            }
+            int i, j;
+            int temp;
+            // 设定一个标记，若为true,则表示此次循环没有进行交换，也就是待排序已经有序，排序已经完成
+            bool isExchanged = true;
 
-            for (var i = 0; i < list.Count; i++)
+            for (j = 1; j < arr.Count && isExchanged; j++)
             {
-                // 设定一个标记，若为true,则表示此次循环没有进行交换，也就是待排序已经有序，排序已经完成
-                var flag = true;
-                for (var j = i + 1; j < list.Count; j++)
+                isExchanged = false;
+                for (i = 0; i < arr.Count - j; i++)
                 {
-                    if (list[i] > list[j])
+                    if (arr[i].CompareTo(arr[i + 1]) > 0)
                     {
-                        var temp = list[i];
-                        list[i] = list[j];
-                        list[j] = temp;
-                        flag = false;
-                    }
-                    if (flag)
-                    {
-                        return list;
+                        // 核心操作：交换两个元素
+                        temp = arr[i];
+                        arr[i] = arr[i + 1];
+                        arr[i + 1] = temp;
+                        // 附加操作：改变标志
+                        isExchanged = true;
                     }
                 }
+
+                arr.DisplayElements();
             }
-            return list;
         }
 	}
 }

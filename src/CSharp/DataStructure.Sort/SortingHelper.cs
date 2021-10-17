@@ -83,6 +83,7 @@ namespace DataStructure.Sort
         {
             int i, j;
             T temp;
+            // 设定一个标记，若为true,则表示此次循环没有进行交换，也就是待排序已经有序，排序已经完成
             bool isExchanged = true;
 
             for (j = 1; j < arr.Length && isExchanged; j++)
