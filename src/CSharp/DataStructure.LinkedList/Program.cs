@@ -7,10 +7,10 @@ namespace DataStructure.LinkedList
     {
         static void Main(string[] args)
         {
-            // MySingleLinkListTest();
+            MySingleLinkListTest();
             // MyDoubleLinkedListTest();
             // MyCircularLinkedListTest();
-            LruCacheTest();
+            // LruCacheTest();
         }
 
         #region 单链表测试
@@ -75,6 +75,26 @@ namespace DataStructure.LinkedList
             {
                 Console.WriteLine(linkedList[i]);
             }
+
+            // 测试单链表是否有环
+            MySingleLinkedList<int> circlelinkedList = new MySingleLinkedList<int>();
+            circlelinkedList.Add(0);
+            circlelinkedList.Add(1);
+            circlelinkedList.Add(2);
+            circlelinkedList.Add(3);
+            var newNode = new Node<int>(4, circlelinkedList.GetNodeByIndex(1));
+            circlelinkedList.Add(newNode);
+
+            var detectCircle = circlelinkedList.DetectCircleByFastSlow();
+            if (detectCircle == null)
+            {
+                Console.WriteLine("The singlelinkedlist does not contains circle");
+            }
+            else
+            {
+                Console.WriteLine($"The singlelinkedlist contains circle and node value is {detectCircle.Item}");
+            }
+
             Console.WriteLine("----------------------------");
         }
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Xml;
 
 namespace DataStructure.LinkedList
 {
@@ -54,7 +53,7 @@ namespace DataStructure.LinkedList
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        private Node<T> GetNodeByIndex(int index)
+        public Node<T> GetNodeByIndex(int index)
         {
             if (index < 0 || index >= this._count)
             {
@@ -78,6 +77,26 @@ namespace DataStructure.LinkedList
         {
             Node<T> newNode = new Node<T>(value);
             if (this._head == null)
+            {
+                // 如果链表当前为空则置为头结点
+                this._head = newNode;
+            }
+            else
+            {
+                Node<T> prevNode = this.GetNodeByIndex(this._count - 1);
+                prevNode.Next = newNode;
+            }
+
+            this._count++;
+        }
+
+        /// <summary>
+        /// 在尾节点插入新的节点，该方法可以用来构造环状单链表
+        /// </summary>
+        /// <param name="newNode"></param>
+        public void Add(Node<T> newNode)
+        {
+            if(this._head == null)
             {
                 // 如果链表当前为空则置为头结点
                 this._head = newNode;
@@ -154,6 +173,57 @@ namespace DataStructure.LinkedList
             }
 
             this._count--;
+        }
+
+        /// <summary>
+        /// 判断单链表是否有环，若有环则找到入口
+        /// 使用快慢指针的方式
+        /// </summary>
+        /// <param name="head">链表头节点</param>
+        /// <returns>若为空，则不存在环；不为空，则输出为入口节点</returns>
+        public Node<T> DetectCircleByFastSlow()
+        {
+            // 快慢指针从头节点开始
+            Node<T> fast = _head;
+            Node<T> slow = _head;
+            // 用于记录相遇点
+            Node<T> encounter = null;
+            // fast一次走两步，所以要保证next和next.next都不为空，为空则说明无环
+            while (fast.Next != null && fast.Next.Next != null)
+            {
+                // fast走两步，slow走一步
+                fast = fast.Next.Next;
+                slow = slow.Next;
+                // fast和slow一样，说明相遇了，或者fast追上slow了
+                if (fast == slow)
+                {
+                    // 记录相遇点，fast和slow都一样
+                    encounter = fast;
+                    // 相遇了，就退出环检测过程
+                    break;
+                }
+            }
+
+            // 如果encounter为空，说明没有环，就不用继续找环入口了
+            if (encounter == null)
+            {
+                return encounter;
+            }
+
+            // 计算环的入口点
+
+            // fast回到head位置
+            fast = _head;
+            // 只要两者不相遇，就一直走下去
+            while (fast != slow)
+            {
+                // fast每次走一步，slow每次走一步，速度一样
+                fast = fast.Next;
+                slow = slow.Next;
+            }
+
+            // 相遇点，即为环入口
+            return fast;
         }
     }
 
