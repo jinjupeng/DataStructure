@@ -27,8 +27,9 @@ namespace DataStructure.WinForm
             this.Text = "数据结构可视化演示系统";
             this.Size = new Size(1000, 700);
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.MaximizeBox = true;
+            this.MinimumSize = new Size(800, 600);
 
             // 创建主TabControl
             mainTabControl = new TabControl();
@@ -457,17 +458,20 @@ namespace DataStructure.WinForm
 
         private void DoubleLinkedListButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("双向链表可视化功能开发中...", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DoubleLinkedListForm form = new DoubleLinkedListForm();
+            form.Show();
         }
 
         private void CircularLinkedListButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("循环链表可视化功能开发中...", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            CircularLinkedListForm form = new CircularLinkedListForm();
+            form.Show();
         }
 
         private void LruCacheButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("LRU缓存可视化功能开发中...", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LRUCacheForm form = new LRUCacheForm();
+            form.Show();
         }
 
         // 树结构事件处理方法
@@ -479,7 +483,8 @@ namespace DataStructure.WinForm
 
         private void BstButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("二叉搜索树可视化功能开发中...", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            BinarySearchTreeForm form = new BinarySearchTreeForm();
+            form.Show();
         }
 
         private void AvlTreeButton_Click(object sender, EventArgs e)

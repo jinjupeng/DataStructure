@@ -8,9 +8,5 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="LinkedList\" />
-    <Folder Include="Tree\" />
-  </ItemGroup>
 
 </Project>

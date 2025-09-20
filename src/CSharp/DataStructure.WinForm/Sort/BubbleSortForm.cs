@@ -38,10 +38,8 @@ namespace DataStructure.WinForm.Sort
 
                     if (data[i].CompareTo(data[i + 1]) > 0)
                     {
-                        // 交换元素
-                        int temp = data[i];
-                        data[i] = data[i + 1];
-                        data[i + 1] = temp;
+                        // 使用交换可视化
+                        await ShowSwapAnimation(i, i + 1);
                         isExchanged = true;
                     }
                 }

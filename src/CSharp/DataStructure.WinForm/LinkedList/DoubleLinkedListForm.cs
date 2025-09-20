@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace DataStructure.WinForm.LinkedList
 {
-    public partial class SingleLinkedListForm : Form
+    public partial class DoubleLinkedListForm : Form
     {
         private Panel drawPanel;
         private Label statusLabel;
@@ -22,7 +22,7 @@ namespace DataStructure.WinForm.LinkedList
         private int highlightIndex = -1;
         private string currentOperation = "";
 
-        public SingleLinkedListForm()
+        public DoubleLinkedListForm()
         {
             InitializeComponent();
             linkedList = new List<int>();
@@ -33,7 +33,7 @@ namespace DataStructure.WinForm.LinkedList
             this.SuspendLayout();
 
             // 设置窗体属性
-            this.Text = "单链表可视化演示";
+            this.Text = "双向链表可视化演示";
             this.Size = new Size(1000, 600);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.Sizable;
@@ -53,9 +53,9 @@ namespace DataStructure.WinForm.LinkedList
             statusLabel = new Label();
             statusLabel.Location = new Point(20, 20);
             statusLabel.Size = new Size(400, 30);
-            statusLabel.Text = "单链表可视化演示 - 准备就绪";
+            statusLabel.Text = "双向链表可视化演示 - 准备就绪";
             statusLabel.Font = new Font("微软雅黑", 12, FontStyle.Bold);
-            statusLabel.ForeColor = Color.DarkBlue;
+            statusLabel.ForeColor = Color.DarkGreen;
 
             // 创建操作标签
             operationLabel = new Label();
@@ -152,17 +152,17 @@ namespace DataStructure.WinForm.LinkedList
             {
                 using (Font font = new Font("微软雅黑", 14))
                 {
-                    g.DrawString("链表为空", font, Brushes.Gray, 
-                        drawPanel.Width / 2 - 50, drawPanel.Height / 2 - 20);
+                    g.DrawString("双向链表为空", font, Brushes.Gray, 
+                        drawPanel.Width / 2 - 60, drawPanel.Height / 2 - 20);
                 }
                 return;
             }
 
             int startX = 50;
             int startY = drawPanel.Height / 2;
-            int nodeWidth = 80;
-            int nodeHeight = 50;
-            int spacing = 100;
+            int nodeWidth = 100;
+            int nodeHeight = 60;
+            int spacing = 120;
 
             for (int i = 0; i < linkedList.Count; i++)
             {
@@ -170,7 +170,7 @@ namespace DataStructure.WinForm.LinkedList
                 int y = startY - nodeHeight / 2;
 
                 // 绘制节点
-                Color nodeColor = (i == highlightIndex) ? Color.Red : Color.LightBlue;
+                Color nodeColor = (i == highlightIndex) ? Color.Red : Color.LightGreen;
                 using (Brush brush = new SolidBrush(nodeColor))
                 {
                     g.FillRectangle(brush, x, y, nodeWidth, nodeHeight);
@@ -180,6 +180,48 @@ namespace DataStructure.WinForm.LinkedList
                 using (Pen pen = new Pen(Color.Black, 2))
                 {
                     g.DrawRectangle(pen, x, y, nodeWidth, nodeHeight);
+                }
+
+                // 绘制前向指针
+                if (i < linkedList.Count - 1)
+                {
+                    int arrowStartX = x + nodeWidth;
+                    int arrowEndX = x + spacing - 20;
+                    int arrowY = y + nodeHeight / 2;
+
+                    using (Pen pen = new Pen(Color.Blue, 2))
+                    {
+                        g.DrawLine(pen, arrowStartX, arrowY, arrowEndX, arrowY);
+                        
+                        // 绘制箭头头部
+                        Point[] arrowHead = {
+                            new Point(arrowEndX - 10, arrowY - 5),
+                            new Point(arrowEndX, arrowY),
+                            new Point(arrowEndX - 10, arrowY + 5)
+                        };
+                        g.FillPolygon(Brushes.Blue, arrowHead);
+                    }
+                }
+
+                // 绘制后向指针
+                if (i > 0)
+                {
+                    int arrowStartX = x;
+                    int arrowEndX = x - spacing + 20;
+                    int arrowY = y + nodeHeight / 2;
+
+                    using (Pen pen = new Pen(Color.Red, 2))
+                    {
+                        g.DrawLine(pen, arrowStartX, arrowY, arrowEndX, arrowY);
+                        
+                        // 绘制箭头头部
+                        Point[] arrowHead = {
+                            new Point(arrowEndX + 10, arrowY - 5),
+                            new Point(arrowEndX, arrowY),
+                            new Point(arrowEndX + 10, arrowY + 5)
+                        };
+                        g.FillPolygon(Brushes.Red, arrowHead);
+                    }
                 }
 
                 // 绘制数值
@@ -192,24 +234,16 @@ namespace DataStructure.WinForm.LinkedList
                         y + (nodeHeight - textSize.Height) / 2);
                 }
 
-                // 绘制箭头（除了最后一个节点）
-                if (i < linkedList.Count - 1)
+                // 绘制指针标签
+                using (Font font = new Font("微软雅黑", 8))
                 {
-                    int arrowStartX = x + nodeWidth;
-                    int arrowEndX = x + spacing - 20;
-                    int arrowY = y + nodeHeight / 2;
-
-                    using (Pen pen = new Pen(Color.Black, 2))
+                    if (i < linkedList.Count - 1)
                     {
-                        g.DrawLine(pen, arrowStartX, arrowY, arrowEndX, arrowY);
-                        
-                        // 绘制箭头头部
-                        Point[] arrowHead = {
-                            new Point(arrowEndX - 10, arrowY - 5),
-                            new Point(arrowEndX, arrowY),
-                            new Point(arrowEndX - 10, arrowY + 5)
-                        };
-                        g.FillPolygon(Brushes.Black, arrowHead);
+                        g.DrawString("next", font, Brushes.Blue, x + nodeWidth + 5, y + 10);
+                    }
+                    if (i > 0)
+                    {
+                        g.DrawString("prev", font, Brushes.Red, x - 30, y + 10);
                     }
                 }
             }
@@ -364,7 +398,7 @@ namespace DataStructure.WinForm.LinkedList
         {
             linkedList.Clear();
             highlightIndex = -1;
-            currentOperation = "清空链表";
+            currentOperation = "清空双向链表";
             UpdateDisplay();
             
             // 重置高亮
@@ -405,7 +439,7 @@ namespace DataStructure.WinForm.LinkedList
 
         private void UpdateDisplay()
         {
-            statusLabel.Text = $"单链表可视化演示 - 元素数量: {linkedList.Count}";
+            statusLabel.Text = $"双向链表可视化演示 - 元素数量: {linkedList.Count}";
             operationLabel.Text = $"当前操作: {currentOperation}";
             drawPanel.Invalidate();
         }

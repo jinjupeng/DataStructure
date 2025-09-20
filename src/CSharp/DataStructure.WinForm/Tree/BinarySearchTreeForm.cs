@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace DataStructure.WinForm.Tree
 {
-    public partial class BinaryTreeForm : Form
+    public partial class BinarySearchTreeForm : Form
     {
         private Panel drawPanel;
         private Label statusLabel;
@@ -40,7 +40,7 @@ namespace DataStructure.WinForm.Tree
             }
         }
 
-        public BinaryTreeForm()
+        public BinarySearchTreeForm()
         {
             InitializeComponent();
             root = null;
@@ -51,7 +51,7 @@ namespace DataStructure.WinForm.Tree
             this.SuspendLayout();
 
             // 设置窗体属性
-            this.Text = "二叉树可视化演示";
+            this.Text = "二叉搜索树可视化演示";
             this.Size = new Size(1200, 700);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.Sizable;
@@ -71,9 +71,9 @@ namespace DataStructure.WinForm.Tree
             statusLabel = new Label();
             statusLabel.Location = new Point(20, 20);
             statusLabel.Size = new Size(400, 30);
-            statusLabel.Text = "二叉树可视化演示 - 准备就绪";
+            statusLabel.Text = "二叉搜索树可视化演示 - 准备就绪";
             statusLabel.Font = new Font("微软雅黑", 12, FontStyle.Bold);
-            statusLabel.ForeColor = Color.DarkGreen;
+            statusLabel.ForeColor = Color.DarkBlue;
 
             // 创建操作标签
             operationLabel = new Label();
@@ -187,8 +187,8 @@ namespace DataStructure.WinForm.Tree
             {
                 using (Font font = new Font("微软雅黑", 14))
                 {
-                    g.DrawString("树为空", font, Brushes.Gray, 
-                        drawPanel.Width / 2 - 50, drawPanel.Height / 2 - 20);
+                    g.DrawString("二叉搜索树为空", font, Brushes.Gray, 
+                        drawPanel.Width / 2 - 80, drawPanel.Height / 2 - 20);
                 }
                 return;
             }
@@ -242,7 +242,7 @@ namespace DataStructure.WinForm.Tree
             }
 
             // 绘制节点
-            Color nodeColor = (node == highlightNode) ? Color.Red : Color.LightBlue;
+            Color nodeColor = (node == highlightNode) ? Color.Red : Color.LightGreen;
             using (Brush brush = new SolidBrush(nodeColor))
             {
                 g.FillEllipse(brush, node.X - 25, node.Y - 25, 50, 50);
@@ -440,7 +440,7 @@ namespace DataStructure.WinForm.Tree
         {
             root = null;
             highlightNode = null;
-            currentOperation = "清空树";
+            currentOperation = "清空二叉搜索树";
             UpdateDisplay();
             
             // 重置高亮
@@ -556,7 +556,7 @@ namespace DataStructure.WinForm.Tree
         private void UpdateDisplay()
         {
             int nodeCount = CountNodes(root);
-            statusLabel.Text = $"二叉树可视化演示 - 节点数量: {nodeCount}";
+            statusLabel.Text = $"二叉搜索树可视化演示 - 节点数量: {nodeCount}";
             operationLabel.Text = $"当前操作: {currentOperation}";
             drawPanel.Invalidate();
         }

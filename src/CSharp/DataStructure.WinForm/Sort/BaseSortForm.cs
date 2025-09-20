@@ -11,7 +11,7 @@ namespace DataStructure.WinForm.Sort
         protected int[] data;
         protected int[] originalData;
         protected bool isSorting = false;
-        protected int delay = 100; // 动画延迟时间（毫秒）
+        protected int delay = 500; // 动画延迟时间（毫秒）
         protected Graphics graphics;
         protected Panel drawPanel;
         protected Label statusLabel;
@@ -23,6 +23,12 @@ namespace DataStructure.WinForm.Sort
         protected TextBox dataInputTextBox;
         protected Button applyDataButton;
         protected Button clearDataButton;
+        
+        // 交换可视化相关
+        protected int swapIndex1 = -1;
+        protected int swapIndex2 = -1;
+        protected bool isSwapping = false;
+        protected int swapStep = 0; // 交换步骤：0-准备，1-交换中，2-完成
 
         public BaseSortForm()
         {
@@ -38,15 +44,17 @@ namespace DataStructure.WinForm.Sort
             Text = "排序可视化";
             Size = new Size(800, 600);
             StartPosition = FormStartPosition.CenterScreen;
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.Sizable;
+            MaximizeBox = true;
+            MinimumSize = new Size(600, 500);
 
             // 创建绘制面板
-            drawPanel = new Panel();
+            drawPanel = new DoubleBufferedPanel();
             drawPanel.Location = new Point(20, 60);
             drawPanel.Size = new Size(740, 400);
             drawPanel.BackColor = Color.White;
             drawPanel.BorderStyle = BorderStyle.FixedSingle;
+            drawPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             drawPanel.Paint += DrawPanel_Paint;
 
             // 创建状态标签
@@ -55,12 +63,14 @@ namespace DataStructure.WinForm.Sort
             statusLabel.Size = new Size(300, 30);
             statusLabel.Text = "准备就绪";
             statusLabel.Font = new Font("微软雅黑", 10);
+            statusLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left;
 
             // 创建开始按钮
             startButton = new Button();
             startButton.Location = new Point(350, 20);
             startButton.Size = new Size(80, 30);
             startButton.Text = "开始排序";
+            startButton.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             startButton.Click += StartButton_Click;
 
             // 创建重置按钮
@@ -68,6 +78,7 @@ namespace DataStructure.WinForm.Sort
             resetButton.Location = new Point(450, 20);
             resetButton.Size = new Size(80, 30);
             resetButton.Text = "重置";
+            resetButton.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             resetButton.Click += ResetButton_Click;
 
             // 创建随机生成按钮
@@ -75,6 +86,7 @@ namespace DataStructure.WinForm.Sort
             randomButton.Location = new Point(550, 20);
             randomButton.Size = new Size(80, 30);
             randomButton.Text = "随机生成";
+            randomButton.Anchor = AnchorStyles.Top | AnchorStyles.Left;
             randomButton.Click += RandomButton_Click;
 
             // 创建速度滑块
@@ -83,16 +95,18 @@ namespace DataStructure.WinForm.Sort
             speedTrackBar.Size = new Size(100, 30);
             speedTrackBar.Minimum = 1;
             speedTrackBar.Maximum = 20;
-            speedTrackBar.Value = 10;
+            speedTrackBar.Value = 5; // 默认设置为较慢的速度
             speedTrackBar.TickFrequency = 5;
+            speedTrackBar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             speedTrackBar.ValueChanged += SpeedTrackBar_ValueChanged;
 
             // 创建速度标签
             speedLabel = new Label();
             speedLabel.Location = new Point(650, 50);
             speedLabel.Size = new Size(100, 20);
-            speedLabel.Text = "速度: 中等";
+            speedLabel.Text = "速度: 慢";
             speedLabel.Font = new Font("微软雅黑", 8);
+            speedLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 
             // 创建数据输入区域
             CreateDataInputControls();
@@ -117,6 +131,7 @@ namespace DataStructure.WinForm.Sort
             dataInputLabel.Location = new Point(20, 480);
             dataInputLabel.Size = new Size(200, 25);
             dataInputLabel.Font = new Font("微软雅黑", 9);
+            dataInputLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
 
             // 数据输入文本框
             dataInputTextBox = new TextBox();
@@ -124,6 +139,7 @@ namespace DataStructure.WinForm.Sort
             dataInputTextBox.Size = new Size(300, 25);
             dataInputTextBox.Font = new Font("微软雅黑", 9);
             dataInputTextBox.Text = "64, 34, 25, 12, 22, 11, 90, 5, 77, 30";
+            dataInputTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
 
             // 应用数据按钮
             applyDataButton = new Button();
@@ -131,6 +147,7 @@ namespace DataStructure.WinForm.Sort
             applyDataButton.Location = new Point(550, 480);
             applyDataButton.Size = new Size(80, 25);
             applyDataButton.Font = new Font("微软雅黑", 9);
+            applyDataButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             applyDataButton.Click += ApplyDataButton_Click;
 
             // 清空数据按钮
@@ -139,6 +156,7 @@ namespace DataStructure.WinForm.Sort
             clearDataButton.Location = new Point(650, 480);
             clearDataButton.Size = new Size(60, 25);
             clearDataButton.Font = new Font("微软雅黑", 9);
+            clearDataButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             clearDataButton.Click += ClearDataButton_Click;
 
             // 添加控件到窗体
@@ -163,6 +181,8 @@ namespace DataStructure.WinForm.Sort
         protected virtual void DrawPanel_Paint(object sender, PaintEventArgs e)
         {
             graphics = e.Graphics;
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             DrawBars();
         }
 
@@ -170,34 +190,63 @@ namespace DataStructure.WinForm.Sort
         {
             if (data == null) return;
 
+            // 清除背景
             graphics.Clear(Color.White);
+            
             int barWidth = drawPanel.Width / data.Length;
             int maxHeight = drawPanel.Height - 20;
-
-            for (int i = 0; i < data.Length; i++)
+            
+            // 预创建字体和画笔，避免重复创建
+            using (Font font = new Font("Arial", 8))
+            using (Pen borderPen = new Pen(Color.Black, 1))
             {
-                int barHeight = (int)((double)data[i] / 400 * maxHeight);
-                int x = i * barWidth;
-                int y = drawPanel.Height - barHeight - 10;
-
-                // 根据排序状态选择颜色
-                Color barColor = GetBarColor(i);
-                using (Brush brush = new SolidBrush(barColor))
+                for (int i = 0; i < data.Length; i++)
                 {
-                    graphics.FillRectangle(brush, x, y, barWidth - 2, barHeight);
-                }
+                    int barHeight = (int)((double)data[i] / 400 * maxHeight);
+                    int x = i * barWidth;
+                    int y = drawPanel.Height - barHeight - 10;
 
-                // 绘制数值
-                using (Font font = new Font("Arial", 8))
-                {
-                    graphics.DrawString(data[i].ToString(), font, Brushes.Black, 
-                        x + barWidth / 2 - 10, y - 15);
+                    // 根据排序状态选择颜色
+                    Color barColor = GetBarColor(i);
+                    
+                    // 绘制柱子
+                    using (Brush brush = new SolidBrush(barColor))
+                    {
+                        graphics.FillRectangle(brush, x, y, barWidth - 2, barHeight);
+                    }
+                    
+                    // 绘制边框
+                    graphics.DrawRectangle(borderPen, x, y, barWidth - 2, barHeight);
+
+                    // 绘制数值（只在柱子足够高时绘制）
+                    if (barHeight > 20)
+                    {
+                        string text = data[i].ToString();
+                        SizeF textSize = graphics.MeasureString(text, font);
+                        graphics.DrawString(text, font, Brushes.Black, 
+                            x + (barWidth - textSize.Width) / 2, y - 15);
+                    }
                 }
             }
         }
 
         protected virtual Color GetBarColor(int index)
         {
+            // 交换可视化效果
+            if (isSwapping && (index == swapIndex1 || index == swapIndex2))
+            {
+                switch (swapStep)
+                {
+                    case 0: // 准备交换
+                        return Color.Orange;
+                    case 1: // 交换中
+                        return Color.Red;
+                    case 2: // 交换完成
+                        return Color.Green;
+                    default:
+                        return Color.Red;
+                }
+            }
             return Color.LightBlue;
         }
 
@@ -285,8 +334,13 @@ namespace DataStructure.WinForm.Sort
 
         protected virtual void SpeedTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            delay = 200 - speedTrackBar.Value * 10;
-            string speedText = speedTrackBar.Value <= 5 ? "慢" : 
+            // 调整速度计算公式，使速度更慢
+            delay = 1000 - speedTrackBar.Value * 50; // 范围从950ms到50ms
+            if (delay < 50) delay = 50; // 最小延迟50ms
+            if (delay > 1000) delay = 1000; // 最大延迟1000ms
+            
+            string speedText = speedTrackBar.Value <= 5 ? "很慢" : 
+                              speedTrackBar.Value <= 10 ? "慢" : 
                               speedTrackBar.Value <= 15 ? "中等" : "快";
             speedLabel.Text = $"速度: {speedText}";
         }
@@ -302,13 +356,64 @@ namespace DataStructure.WinForm.Sort
             if (!isSorting) return;
             
             data = (int[])array.Clone();
-            drawPanel.Invoke(new Action(() => drawPanel.Invalidate()));
+            
+            // 使用BeginInvoke进行异步更新，减少阻塞
+            drawPanel.BeginInvoke(new Action(() => {
+                if (isSorting) // 再次检查是否仍在排序
+                {
+                    drawPanel.Invalidate();
+                }
+            }));
+            
+            // 调整延迟时间，使动画更流畅
             await Task.Delay(delay);
         }
 
         protected void SetHighlightIndices(int index1, int index2)
         {
             // 子类可以重写此方法来设置高亮索引
+        }
+
+        protected async Task ShowSwapAnimation(int index1, int index2)
+        {
+            if (!isSorting) return;
+
+            // 设置交换状态
+            isSwapping = true;
+            swapIndex1 = index1;
+            swapIndex2 = index2;
+
+            // 步骤1：准备交换（橙色高亮）
+            swapStep = 0;
+            drawPanel.BeginInvoke(new Action(() => {
+                if (isSorting) drawPanel.Invalidate();
+            }));
+            await Task.Delay(delay / 4);
+
+            // 步骤2：交换中（红色高亮）
+            swapStep = 1;
+            drawPanel.BeginInvoke(new Action(() => {
+                if (isSorting) drawPanel.Invalidate();
+            }));
+            await Task.Delay(delay / 8);
+
+            // 执行交换
+            int temp = data[index1];
+            data[index1] = data[index2];
+            data[index2] = temp;
+
+            // 步骤3：交换完成（绿色高亮）
+            swapStep = 2;
+            drawPanel.BeginInvoke(new Action(() => {
+                if (isSorting) drawPanel.Invalidate();
+            }));
+            await Task.Delay(delay / 4);
+
+            // 重置交换状态
+            isSwapping = false;
+            swapIndex1 = -1;
+            swapIndex2 = -1;
+            swapStep = 0;
         }
     }
 }

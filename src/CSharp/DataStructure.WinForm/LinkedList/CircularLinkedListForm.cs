@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace DataStructure.WinForm.LinkedList
 {
-    public partial class SingleLinkedListForm : Form
+    public partial class CircularLinkedListForm : Form
     {
         private Panel drawPanel;
         private Label statusLabel;
@@ -22,7 +22,7 @@ namespace DataStructure.WinForm.LinkedList
         private int highlightIndex = -1;
         private string currentOperation = "";
 
-        public SingleLinkedListForm()
+        public CircularLinkedListForm()
         {
             InitializeComponent();
             linkedList = new List<int>();
@@ -33,7 +33,7 @@ namespace DataStructure.WinForm.LinkedList
             this.SuspendLayout();
 
             // 设置窗体属性
-            this.Text = "单链表可视化演示";
+            this.Text = "循环链表可视化演示";
             this.Size = new Size(1000, 600);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.Sizable;
@@ -53,9 +53,9 @@ namespace DataStructure.WinForm.LinkedList
             statusLabel = new Label();
             statusLabel.Location = new Point(20, 20);
             statusLabel.Size = new Size(400, 30);
-            statusLabel.Text = "单链表可视化演示 - 准备就绪";
+            statusLabel.Text = "循环链表可视化演示 - 准备就绪";
             statusLabel.Font = new Font("微软雅黑", 12, FontStyle.Bold);
-            statusLabel.ForeColor = Color.DarkBlue;
+            statusLabel.ForeColor = Color.DarkOrange;
 
             // 创建操作标签
             operationLabel = new Label();
@@ -79,24 +79,16 @@ namespace DataStructure.WinForm.LinkedList
 
             // 创建操作按钮
             insertButton = new Button();
-            insertButton.Text = "插入头部";
+            insertButton.Text = "插入";
             insertButton.Location = new Point(200, 480);
-            insertButton.Size = new Size(80, 25);
+            insertButton.Size = new Size(60, 25);
             insertButton.Font = new Font("微软雅黑", 9);
             insertButton.BackColor = Color.LightGreen;
             insertButton.Click += InsertButton_Click;
 
-            Button insertTailButton = new Button();
-            insertTailButton.Text = "插入尾部";
-            insertTailButton.Location = new Point(290, 480);
-            insertTailButton.Size = new Size(80, 25);
-            insertTailButton.Font = new Font("微软雅黑", 9);
-            insertTailButton.BackColor = Color.LightBlue;
-            insertTailButton.Click += InsertTailButton_Click;
-
             deleteButton = new Button();
             deleteButton.Text = "删除";
-            deleteButton.Location = new Point(380, 480);
+            deleteButton.Location = new Point(270, 480);
             deleteButton.Size = new Size(60, 25);
             deleteButton.Font = new Font("微软雅黑", 9);
             deleteButton.BackColor = Color.LightCoral;
@@ -104,7 +96,7 @@ namespace DataStructure.WinForm.LinkedList
 
             searchButton = new Button();
             searchButton.Text = "查找";
-            searchButton.Location = new Point(450, 480);
+            searchButton.Location = new Point(340, 480);
             searchButton.Size = new Size(60, 25);
             searchButton.Font = new Font("微软雅黑", 9);
             searchButton.BackColor = Color.LightYellow;
@@ -112,7 +104,7 @@ namespace DataStructure.WinForm.LinkedList
 
             clearButton = new Button();
             clearButton.Text = "清空链表";
-            clearButton.Location = new Point(520, 480);
+            clearButton.Location = new Point(410, 480);
             clearButton.Size = new Size(80, 25);
             clearButton.Font = new Font("微软雅黑", 9);
             clearButton.BackColor = Color.LightGray;
@@ -120,7 +112,7 @@ namespace DataStructure.WinForm.LinkedList
 
             randomButton = new Button();
             randomButton.Text = "随机生成";
-            randomButton.Location = new Point(610, 480);
+            randomButton.Location = new Point(500, 480);
             randomButton.Size = new Size(80, 25);
             randomButton.Font = new Font("微软雅黑", 9);
             randomButton.BackColor = Color.LightPink;
@@ -133,7 +125,6 @@ namespace DataStructure.WinForm.LinkedList
             this.Controls.Add(valueLabel);
             this.Controls.Add(valueTextBox);
             this.Controls.Add(insertButton);
-            this.Controls.Add(insertTailButton);
             this.Controls.Add(deleteButton);
             this.Controls.Add(searchButton);
             this.Controls.Add(clearButton);
@@ -152,65 +143,123 @@ namespace DataStructure.WinForm.LinkedList
             {
                 using (Font font = new Font("微软雅黑", 14))
                 {
-                    g.DrawString("链表为空", font, Brushes.Gray, 
-                        drawPanel.Width / 2 - 50, drawPanel.Height / 2 - 20);
+                    g.DrawString("循环链表为空", font, Brushes.Gray, 
+                        drawPanel.Width / 2 - 60, drawPanel.Height / 2 - 20);
                 }
                 return;
             }
 
-            int startX = 50;
-            int startY = drawPanel.Height / 2;
-            int nodeWidth = 80;
-            int nodeHeight = 50;
-            int spacing = 100;
-
-            for (int i = 0; i < linkedList.Count; i++)
+            if (linkedList.Count == 1)
             {
-                int x = startX + i * spacing;
-                int y = startY - nodeHeight / 2;
+                // 只有一个节点时，绘制自循环
+                int singleCenterX = drawPanel.Width / 2;
+                int singleCenterY = drawPanel.Height / 2;
+                int radius = 80;
 
                 // 绘制节点
-                Color nodeColor = (i == highlightIndex) ? Color.Red : Color.LightBlue;
+                Color nodeColor = (0 == highlightIndex) ? Color.Red : Color.LightCyan;
                 using (Brush brush = new SolidBrush(nodeColor))
                 {
-                    g.FillRectangle(brush, x, y, nodeWidth, nodeHeight);
+                    g.FillEllipse(brush, singleCenterX - radius, singleCenterY - radius, radius * 2, radius * 2);
                 }
 
                 // 绘制节点边框
                 using (Pen pen = new Pen(Color.Black, 2))
                 {
-                    g.DrawRectangle(pen, x, y, nodeWidth, nodeHeight);
+                    g.DrawEllipse(pen, singleCenterX - radius, singleCenterY - radius, radius * 2, radius * 2);
                 }
 
                 // 绘制数值
                 using (Font font = new Font("微软雅黑", 12, FontStyle.Bold))
                 {
+                    string text = linkedList[0].ToString();
+                    SizeF textSize = g.MeasureString(text, font);
+                    g.DrawString(text, font, Brushes.Black, 
+                        singleCenterX - textSize.Width / 2, 
+                        singleCenterY - textSize.Height / 2);
+                }
+
+                // 绘制自循环箭头
+                using (Pen pen = new Pen(Color.Blue, 2))
+                {
+                    g.DrawArc(pen, singleCenterX - radius - 20, singleCenterY - radius - 20, 
+                        (radius + 20) * 2, (radius + 20) * 2, 0, 270);
+                    
+                    // 绘制箭头
+                    Point[] arrowHead = {
+                        new Point(singleCenterX + radius + 10, singleCenterY - radius - 10),
+                        new Point(singleCenterX + radius + 20, singleCenterY - radius),
+                        new Point(singleCenterX + radius + 10, singleCenterY - radius + 10)
+                    };
+                    g.FillPolygon(Brushes.Blue, arrowHead);
+                }
+                return;
+            }
+
+            // 多个节点时，绘制圆形布局
+            int nodeCount = linkedList.Count;
+            int centerX = drawPanel.Width / 2;
+            int centerY = drawPanel.Height / 2;
+            int circleRadius = Math.Min(drawPanel.Width, drawPanel.Height) / 3;
+            int nodeRadius = 30;
+
+            for (int i = 0; i < nodeCount; i++)
+            {
+                double angle = 2 * Math.PI * i / nodeCount;
+                int x = centerX + (int)(circleRadius * Math.Cos(angle)) - nodeRadius;
+                int y = centerY + (int)(circleRadius * Math.Sin(angle)) - nodeRadius;
+
+                // 绘制节点
+                Color nodeColor = (i == highlightIndex) ? Color.Red : Color.LightCyan;
+                using (Brush brush = new SolidBrush(nodeColor))
+                {
+                    g.FillEllipse(brush, x, y, nodeRadius * 2, nodeRadius * 2);
+                }
+
+                // 绘制节点边框
+                using (Pen pen = new Pen(Color.Black, 2))
+                {
+                    g.DrawEllipse(pen, x, y, nodeRadius * 2, nodeRadius * 2);
+                }
+
+                // 绘制数值
+                using (Font font = new Font("微软雅黑", 10, FontStyle.Bold))
+                {
                     string text = linkedList[i].ToString();
                     SizeF textSize = g.MeasureString(text, font);
                     g.DrawString(text, font, Brushes.Black, 
-                        x + (nodeWidth - textSize.Width) / 2, 
-                        y + (nodeHeight - textSize.Height) / 2);
+                        x + nodeRadius - textSize.Width / 2, 
+                        y + nodeRadius - textSize.Height / 2);
                 }
 
-                // 绘制箭头（除了最后一个节点）
-                if (i < linkedList.Count - 1)
-                {
-                    int arrowStartX = x + nodeWidth;
-                    int arrowEndX = x + spacing - 20;
-                    int arrowY = y + nodeHeight / 2;
+                // 绘制指向下一个节点的箭头
+                int nextIndex = (i + 1) % nodeCount;
+                double nextAngle = 2 * Math.PI * nextIndex / nodeCount;
+                int nextX = centerX + (int)(circleRadius * Math.Cos(nextAngle));
+                int nextY = centerY + (int)(circleRadius * Math.Sin(nextAngle));
+                int currentX = centerX + (int)(circleRadius * Math.Cos(angle));
+                int currentY = centerY + (int)(circleRadius * Math.Sin(angle));
 
-                    using (Pen pen = new Pen(Color.Black, 2))
-                    {
-                        g.DrawLine(pen, arrowStartX, arrowY, arrowEndX, arrowY);
-                        
-                        // 绘制箭头头部
-                        Point[] arrowHead = {
-                            new Point(arrowEndX - 10, arrowY - 5),
-                            new Point(arrowEndX, arrowY),
-                            new Point(arrowEndX - 10, arrowY + 5)
-                        };
-                        g.FillPolygon(Brushes.Black, arrowHead);
-                    }
+                // 计算箭头位置
+                double arrowAngle = Math.Atan2(nextY - currentY, nextX - currentX);
+                int arrowStartX = currentX + (int)(nodeRadius * Math.Cos(arrowAngle));
+                int arrowStartY = currentY + (int)(nodeRadius * Math.Sin(arrowAngle));
+                int arrowEndX = nextX - (int)(nodeRadius * Math.Cos(arrowAngle));
+                int arrowEndY = nextY - (int)(nodeRadius * Math.Sin(arrowAngle));
+
+                using (Pen pen = new Pen(Color.Blue, 2))
+                {
+                    g.DrawLine(pen, arrowStartX, arrowStartY, arrowEndX, arrowEndY);
+                    
+                    // 绘制箭头头部
+                    Point[] arrowHead = {
+                        new Point(arrowEndX - (int)(10 * Math.Cos(arrowAngle - 0.3)), 
+                                arrowEndY - (int)(10 * Math.Sin(arrowAngle - 0.3))),
+                        new Point(arrowEndX, arrowEndY),
+                        new Point(arrowEndX - (int)(10 * Math.Cos(arrowAngle + 0.3)), 
+                                arrowEndY - (int)(10 * Math.Sin(arrowAngle + 0.3)))
+                    };
+                    g.FillPolygon(Brushes.Blue, arrowHead);
                 }
             }
         }
@@ -226,42 +275,9 @@ namespace DataStructure.WinForm.LinkedList
             try
             {
                 int value = int.Parse(valueTextBox.Text);
-                linkedList.Insert(0, value);
-                highlightIndex = 0;
-                currentOperation = $"插入头部: {value}";
-                UpdateDisplay();
-                
-                // 重置高亮
-                System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-                timer.Interval = 1000;
-                timer.Tick += (s, args) => {
-                    highlightIndex = -1;
-                    currentOperation = "";
-                    UpdateDisplay();
-                    timer.Stop();
-                };
-                timer.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"输入错误：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void InsertTailButton_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(valueTextBox.Text))
-            {
-                MessageBox.Show("请输入要插入的数值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            try
-            {
-                int value = int.Parse(valueTextBox.Text);
                 linkedList.Add(value);
                 highlightIndex = linkedList.Count - 1;
-                currentOperation = $"插入尾部: {value}";
+                currentOperation = $"插入: {value}";
                 UpdateDisplay();
                 
                 // 重置高亮
@@ -364,7 +380,7 @@ namespace DataStructure.WinForm.LinkedList
         {
             linkedList.Clear();
             highlightIndex = -1;
-            currentOperation = "清空链表";
+            currentOperation = "清空循环链表";
             UpdateDisplay();
             
             // 重置高亮
@@ -383,7 +399,7 @@ namespace DataStructure.WinForm.LinkedList
             Random random = new Random();
             linkedList.Clear();
             
-            int count = random.Next(5, 10);
+            int count = random.Next(4, 8);
             for (int i = 0; i < count; i++)
             {
                 linkedList.Add(random.Next(1, 100));
@@ -405,7 +421,7 @@ namespace DataStructure.WinForm.LinkedList
 
         private void UpdateDisplay()
         {
-            statusLabel.Text = $"单链表可视化演示 - 元素数量: {linkedList.Count}";
+            statusLabel.Text = $"循环链表可视化演示 - 元素数量: {linkedList.Count}";
             operationLabel.Text = $"当前操作: {currentOperation}";
             drawPanel.Invalidate();
         }
