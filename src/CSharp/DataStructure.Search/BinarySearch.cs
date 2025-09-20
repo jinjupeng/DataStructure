@@ -9,6 +9,22 @@
          */
 
         /// <summary>
+        /// 二分查找实例方法
+        /// </summary>
+        /// <param name="array">有序数组</param>
+        /// <param name="target">要查找的目标值</param>
+        /// <returns>返回目标值在数组中的索引，如果未找到返回-1</returns>
+        public int IndexOf(int[] array, int target)
+        {
+            if (array == null || array.Length == 0)
+            {
+                return -1;
+            }
+            
+            return BinSearch(array, 0, array.Length - 1, target);
+        }
+
+        /// <summary>
         /// 二分查找While循环实现
         /// </summary>
         /// <param name="nums">数组</param>

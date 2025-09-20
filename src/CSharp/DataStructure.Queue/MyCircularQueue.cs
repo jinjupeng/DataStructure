@@ -1,4 +1,6 @@
-﻿namespace DataStructure.Queue
+﻿using System;
+
+namespace DataStructure.Queue
 {
     /// <summary>
     /// 数组实现循环队列
@@ -100,5 +102,29 @@
             return _count == _length;
         }
 
+        /// <summary>
+        /// 打印循环队列中的所有元素
+        /// </summary>
+        public void PrintAll()
+        {
+            if (IsEmpty())
+            {
+                Console.WriteLine("队列为空");
+                return;
+            }
+
+            Console.Write("循环队列元素: ");
+            int current = _head;
+            for (int i = 0; i < _count; i++)
+            {
+                Console.Write(_items[current]);
+                if (i < _count - 1)
+                {
+                    Console.Write(" -> ");
+                }
+                current = (current + 1) % _length;
+            }
+            Console.WriteLine();
+        }
     }
 }
