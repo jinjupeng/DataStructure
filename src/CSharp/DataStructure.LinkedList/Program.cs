@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DataStructure.LinkedList.LRU;
 
 namespace DataStructure.LinkedList
@@ -7,11 +9,83 @@ namespace DataStructure.LinkedList
     {
         static void Main(string[] args)
         {
-            MySingleLinkListTest();
+            //MySingleLinkListTest();
             // MyDoubleLinkedListTest();
             // MyCircularLinkedListTest();
             // LruCacheTest();
+
+            var studentList = new List<Student>
+            {
+                new Student
+                {
+                    Id = 1,
+                    CourseId = 1,
+                    Score = 60
+                },
+                new Student
+                {
+                    Id = 1,
+                    CourseId = 2,
+                    Score = 80
+                },
+                new Student
+                {
+                    Id = 2,
+                    CourseId = 2,
+                    Score = 82
+                },
+                new Student
+                {
+                    Id = 2,
+                    CourseId = 2,
+                    Score = 40
+                }
+            };
+
+            //var studentId = new List<int>();
+            //var a = studentList.GroupBy(x => x.Id);
+            //foreach (var item in a)
+            //{
+            //    var b = item.ToList();
+            //    if (b.Exists(_ => _.Score < 80))
+            //    {
+            //        studentList.RemoveAll(_ => _.Id == item.Key);
+            //    }
+            //}
+            //studentId = studentList.Select(_ => _.Id).Distinct().ToList();
+
+            //foreach (var item in studentId)
+            //{
+            //    Console.WriteLine(item.ToString());
+            //}
+            //var studentScore = new List<double>();
+            //var a = studentList.GroupBy(x => x.Id);
+            //foreach (var item in a)
+            //{
+            //    var b = item.ToList();
+            //    studentScore.Add(b.Average(x => x.Score));
+            //}
+
+            //foreach (var item in studentScore)
+            //{
+            //    Console.WriteLine(item.ToString());
+            //}
+
+            /**
+             * 计算10个等比数列的和：1，3，9，27，81....N个数
+             */
+            Console.WriteLine(Sum(10));
         }
+
+        public static double Sum(int n)
+        {
+            if(n == 1)
+            {
+                return 1;
+            }
+            return Sum(n - 1) + Math.Pow(3, n - 1);
+        }
+
 
         #region 单链表测试
 
@@ -96,6 +170,8 @@ namespace DataStructure.LinkedList
             }
 
             Console.WriteLine("----------------------------");
+
+
         }
 
         #endregion
@@ -239,5 +315,17 @@ namespace DataStructure.LinkedList
         }
 
         #endregion
+
+
+        
+    }
+
+    public class Student
+    {
+        public int Id { get; set; }
+
+        public int CourseId { get; set; }
+
+        public int Score { get; set; }
     }
 }
